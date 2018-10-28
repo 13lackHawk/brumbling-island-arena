@@ -1,0 +1,10 @@
+"DOTAAbilities" {
+	"tusk_w_sub" {
+		"BaseClass" "ability_lua"
+		"ScriptFile" "abilities/tusk/tusk_w_sub"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName" "tusk_frozen_sigil"
+		"AbilityCooldown" "0"
+		"AbilityCastPoint" "0"
+	}
+}

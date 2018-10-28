@@ -1,0 +1,18 @@
+"DOTAAbilities" {
+	"rubick_q" {
+		"BaseClass" "ability_lua"
+		"ScriptFile" "abilities/rubick/rubick_q"
+		"AbilityType" "DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityTextureName" "invoker_chaos_meteor"
+		"AbilityCooldown" "6.0"
+		"AbilityCastPoint" "0.1"
+		"Damage" "3"
+
+		"TargetingIndicator" {
+			"Type" "TARGETING_INDICATOR_AOE"
+			"Radius" "100"
+			"DisplayRange" "1"
+		}
+	}
+}

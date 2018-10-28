@@ -1,0 +1,8 @@
+"DOTAAbilities" {
+	"shaker_q_sub" {
+		"BaseClass" "ability_lua"
+		"ScriptFile" "abilities/shaker/shaker_q_sub"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName" "shadow_demon_shadow_poison_release"
+	}
+}

@@ -1,0 +1,9 @@
+"DOTAAbilities" {
+	"tusk_r_sub" {
+		"BaseClass" "ability_lua"
+		"ScriptFile" "abilities/tusk/tusk_r_sub"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName" "tusk_walrus_kick"
+		"Damage" "2"
+	}
+}

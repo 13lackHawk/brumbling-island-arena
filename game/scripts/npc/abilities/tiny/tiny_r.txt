@@ -1,0 +1,26 @@
+"DOTAAbilities" {
+	"tiny_r" {
+		"BaseClass" "ability_lua"
+		"ScriptFile" "abilities/tiny/tiny_r"
+		"AbilityType" "DOTA_ABILITY_TYPE_ULTIMATE"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityTextureName" "tiny_tree_throw"
+		"AbilityCooldown" "13.0"
+		"Damage" "4"
+
+		"TargetingIndicator" {
+			"Type" "TARGETING_INDICATOR_LINE"
+			"MaxLength" "1250"
+		}
+
+		"HoverIndicator" {
+			"Type" "TARGETING_INDICATOR_RANGE"
+			"Radius" "1250"
+		}
+
+		"precache" {
+			"particle" "particles/tiny_r/tiny_r.vpcf"
+			"particle" "particles/tiny_r/tiny_r_root.vpcf"
+		}
+	}
+}

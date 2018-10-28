@@ -1,0 +1,1 @@
+modifier_bara_a = class({})

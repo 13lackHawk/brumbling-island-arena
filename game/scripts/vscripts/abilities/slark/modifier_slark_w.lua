@@ -3,9 +3,18 @@ modifier_slark_w = class({})
 if IsServer() then
     function modifier_slark_w:OnCreated()
         local hero = self:GetAbility():GetCaster():GetParentEntity()
+        hero:FindAbility("slark_w"):SetActivated(false)
         self.particle = FX("particles/units/heroes/hero_slark/slark_dark_pact_start.vpcf", PATTACH_CUSTOMORIGIN, hero:GetUnit(), {
             cp1 = {ent = hero:GetUnit()}
         })
+    end
+
+    function modifier_slark_w:OnDestroy()
+        local ability = self:GetParent():GetParentEntity():FindAbility("slark_w")
+        ability:SetActivated(true)
+        ability:StartCooldown(ability:GetCooldown(1))
+        ParticleManager:DestroyParticle(self.particle, false)
+        ParticleManager:ReleaseParticleIndex(self.particle)
     end
 end
 
@@ -44,9 +53,6 @@ function modifier_slark_w:GoBang()
         damage = self:GetAbility():GetDamage(),
         filterProjectiles = true
     })
-
-    ParticleManager:DestroyParticle(self.particle, true)
-    ParticleManager:ReleaseParticleIndex(self.particle)
 
     hero:EmitSound("Arena.Slark.CastW")
 end

@@ -13,7 +13,7 @@ end
 
 function tusk_r:OnChannelFinish(interrupted)
     if interrupted then 
-    	return
+        return
     end
 
     Wrappers.DirectionalAbility(self, 750, 750)
@@ -43,31 +43,28 @@ function tusk_r:OnChannelFinish(interrupted)
         ability = self,
         action = function(target)
             ScreenShake(target:GetPos(), 5, 150, 0.45, 3000, 0, true)
+
             target:Damage(hero, self:GetDamage())
-
             if instanceof(target, Hero) then
-                target:EmitSound("Arena.Tusk.HitR.Hero")
-            else
-                target:EmitSound("Arena.Tusk.HitR.Target")
-            end
-
-            if instanceof(target,Hero) and target:Alive() then
                 hero:Animate(ACT_DOTA_CAST_ABILITY_4, 2)
 
                 FX("particles/units/heroes/hero_tusk/tusk_walruspunch_start.vpcf", PATTACH_ABSORIGIN_FOLLOW, target, { release = true })
+                target:EmitSound("Arena.Tusk.HitR.Hero")
 
                 hero.round.spells:InterruptDashes(target)
-                local dashTime = TuskRKnockback(target, self, direction, 0, 325, 55, true):GetDashTime()
-
-                Timers:CreateTimer(0.2, function()
-                    hero:AddNewModifier(hero, self, "modifier_tusk_r_sub", { duration = dashTime - 0.4 }).target = target
-                end)
-
+                local knockback = TuskRKnockback(target, self, direction, 0, 325, 55, true)
+                hero:AddNewModifier(hero, self, "modifier_tusk_r_sub", { duration = knockback:GetDashTime() - 0.15 }).target = target
                 dash:Interrupt()
-        	else
+            else
                 SoftKnockback(target, self, knockDirection(target,dash), 60, {
                     decrease = 3
                 })
+                target:EmitSound("Arena.Tusk.HitR.Target")
+            end
+        end,
+        notBlockedAction = function(target)
+            if instanceof(target, Hero) then
+                dash:Interrupt()
             end
         end
     }

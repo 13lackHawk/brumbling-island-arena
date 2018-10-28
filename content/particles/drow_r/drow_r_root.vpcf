@@ -1,0 +1,42 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf10:version{b5ef673d-0450-4fb0-a91b-bacae6864827} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_controlPointConfigurations = 
+	[
+		{
+			m_name = "preview"
+			m_drivers = 
+			[
+				{
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+			]
+		},
+	]
+	m_nMaxParticles = 0
+	m_Children = 
+	[
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_dark_willow/dark_willow_bramble_swirl_dark.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/units/heroes/hero_dark_willow/dark_willow_bramble_ground_dust.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/drow_r/drow_r_bramble_root.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/drow_r/drow_r_root_steam.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/drow_r/drow_r_root_ember.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/drow_r/drow_r_root_coil.vpcf"
+		},
+	]
+	m_nBehaviorVersion = 6
+}

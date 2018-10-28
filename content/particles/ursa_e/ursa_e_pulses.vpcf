@@ -1,0 +1,108 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf10:version{b5ef673d-0450-4fb0-a91b-bacae6864827} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_bShouldHitboxesFallbackToRenderBounds = false
+	m_nMaxParticles = 20
+	m_flCullRadius = -1.0
+	m_flConstantRadius = 2.5
+	m_flMaxDrawDistance = 5000.0
+	m_flNoDrawTimeToGoToSleep = 2.0
+	m_bShouldSort = false
+	m_Renderers = 
+	[
+		{
+			_class = "C_OP_RenderSprites"
+			m_hTexture = resource:"materials/particle/bubble.vtex"
+			m_flSourceAlphaValueToMapToZero = 0.503
+			m_flAddSelfAmount = 1.0
+			m_flOverbrightFactor = 2.0
+			VisibilityInputs = 
+			{
+				m_flCameraBias = 20.0
+			}
+		},
+	]
+	m_Operators = 
+	[
+		{
+			_class = "C_OP_BasicMovement"
+		},
+		{
+			_class = "C_OP_Decay"
+			m_nOpEndCapState = 1
+		},
+		{
+			_class = "C_OP_EndCapTimedDecay"
+			m_flDecayTime = 0.25
+		},
+		{
+			_class = "C_OP_RampScalarLinearSimple"
+			m_nOpEndCapState = 1
+			m_Rate = -25.0
+		},
+		{
+			_class = "C_OP_OscillateScalar"
+			m_RateMin = 30.0
+			m_RateMax = 60.0
+			m_FrequencyMin = 2.0
+			m_FrequencyMax = 4.0
+			m_nField = "3"
+			m_flEndTime_min = 99999999999.0
+			m_flEndTime_max = 9999999.0
+		},
+		{
+			_class = "C_OP_LockToBone"
+		},
+	]
+	m_Initializers = 
+	[
+		{
+			_class = "C_INIT_RandomLifeTime"
+			m_fLifetimeMax = 1.5
+			m_fLifetimeMin = 1.5
+		},
+		{
+			_class = "C_INIT_RandomRadius"
+			m_flRadiusMin = 9.0
+			m_flRadiusMax = 10.0
+		},
+		{
+			_class = "C_INIT_CreateOnModel"
+			m_flHitBoxScale = 0.1
+			m_vecDirectionBias = [ 0.0, 0.0, 10.0 ]
+		},
+		{
+			_class = "C_INIT_RandomYaw"
+			m_flDegreesMax = 10.0
+			m_nFieldOutput = "12"
+		},
+		{
+			_class = "C_INIT_RandomColor"
+			m_ColorMin = [ 236, 103, 103, 255 ]
+			m_ColorMax = [ 247, 108, 1, 255 ]
+		},
+	]
+	m_Emitters = 
+	[
+		{
+			_class = "C_OP_InstantaneousEmitter"
+			m_nParticlesToEmit = 20
+		},
+	]
+	m_controlPointConfigurations = 
+	[
+		{
+			m_name = "preview"
+			m_drivers = 
+			[
+				{
+					m_iAttachType = "PATTACH_WORLDORIGIN"
+					m_vecOffset = [ 0.0, 0.0, 0.0 ]
+					m_angOffset = [ null, null, null ]
+					m_entityName = "self"
+				},
+			]
+		},
+	]
+	m_nBehaviorVersion = 5
+}

@@ -87,19 +87,25 @@ function EntityAbilityDataProvider(entityId) {
         return this.FilterAbilities().length;
     };
 
-    this.IsSilenced = function() {
-        if (Entities.IsSilenced(this.entityId)) {
-            return true;
+    this.IsAbilitySilenced = function(name) {
+        var specialAbilities = {
+            "brew_e":2,
+            "tusk_w_sub":2
+        }, silenceModifiers = {
+            "modifier_silence_lua":1,
+            "modifier_am_r":1,
+            "modifier_sven_w_slow":1,
+            "modifier_ogre_5":1,
+            "modifier_ogre_6":1,
+            "modifier_falling":2,
+            "modifier_jugger_q":1,
+            "modifier_tusk_r_target":2
         }
 
-        for (var modifier in statusEffects) {
-            if (statusEffects[modifier].token == "#StatusSilenced" && HasModifier(this.entityId, modifier)) {
-                return true;
+        for (mod in silenceModifiers) {
+            if (HasModifier(this.entityId, mod) && silenceModifiers[mod] >= (specialAbilities[name] || 1)) {
+                return true
             }
-        }
-
-        if (HasModifier(this.entityId, "modifier_falling") || HasModifier(this.entityId, "modifier_jugger_q")) {
-            return true;
         }
 
         return false;
@@ -174,9 +180,9 @@ function AbilityBar(elementId) {
         ability.SetData(data);
         ability.SetCustomClass(prevCl, cl);
 
-        if (this.provider.IsSilenced && this.provider.IsStunned && this.provider.IsRooted) {
+        if (this.provider.IsAbilitySilenced && this.provider.IsStunned && this.provider.IsRooted) {
             var rooted = this.provider.IsRooted() && data.rootDisables;
-            ability.SetDisabled(this.provider.IsSilenced() && !data.attack && !data.custom, this.provider.IsStunned(data.id), rooted);
+            ability.SetDisabled(this.provider.IsAbilitySilenced(data.name) && !data.attack && !data.custom, this.provider.IsStunned(data.id), rooted);
         }
 
         if (data.attack) {

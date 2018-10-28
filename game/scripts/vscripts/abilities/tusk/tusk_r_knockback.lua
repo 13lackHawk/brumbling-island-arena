@@ -67,13 +67,13 @@ end
 function TuskRKnockback:End(Interrupted)
 	self.hero:RemoveModifier("modifier_tusk_r_target")
 	self.destroyed = true
+	self.hero:GetUnit():FadeGesture(ACT_DOTA_FLAIL)
 
 	if not Interrupted then
 		if GameRules.GameMode.round.spells.TestCircle(self.hero:GetPos(), self.hero:GetRad()) then
 			Timers:CreateTimer(0.033203125, function()
 				self.hero:FindClearSpace(self.hero:GetPos(), true)
 			end)
-			self.hero:GetUnit():FadeGesture(ACT_DOTA_FLAIL)
 		else
 			self.hero:MakeFall(self.direction * self.force)
 			self.hero.fallingSpeed = -self.knockup * 3

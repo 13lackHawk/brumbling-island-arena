@@ -13,8 +13,10 @@ if IsServer() then
         local ability = self:GetParent():GetParentEntity():FindAbility("slark_w")
         ability:SetActivated(true)
         ability:StartCooldown(ability:GetCooldown(1))
-        ParticleManager:DestroyParticle(self.particle, false)
-        ParticleManager:ReleaseParticleIndex(self.particle)
+        if self.particle then
+	        ParticleManager:DestroyParticle(self.particle, false)
+	        ParticleManager:ReleaseParticleIndex(self.particle)
+	    end
     end
 end
 
@@ -44,7 +46,10 @@ function modifier_slark_w:GoBang()
     })
 
     hero:GetUnit():StartGestureWithPlaybackRate(ACT_DOTA_CAST_ABILITY_1, 1.5)
-
+    
+    ParticleManager:DestroyParticle(self.particle, true)
+	ParticleManager:ReleaseParticleIndex(self.particle)
+	self.particle = nil
     self:Destroy()
 
     hero:AreaEffect({

@@ -11,7 +11,7 @@ if IsServer() then
         end
 
         self.particle = FX(path, PATTACH_ABSORIGIN, hero, {
-            cp0 = { ent = hero, point = "attach_hitloc" }
+            cp0 = { ent = hero }
         })
     end
 

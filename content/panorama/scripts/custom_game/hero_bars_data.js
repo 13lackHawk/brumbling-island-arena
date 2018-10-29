@@ -41,7 +41,8 @@ var recastModifiers = [
     "modifier_rubick_q",
     "modifier_void_e_sub",
     "modifier_timber_q_recast",
-    "modifier_shaker_q_recast"
+    "modifier_shaker_q_recast",
+    "modifier_tusk_r_sub"
 ];
 
 var specialLayouts = {
@@ -142,6 +143,7 @@ AddStatusEffect("modifier_ta_q", "#StatusBreak", "#b2e7c8");
 AddStatusEffect("modifier_venge_r_target", "#StatusBreak", "#b2e7c8");
 AddStatusEffect("modifier_am_a", "#StatusCharged", "#00b5ff");
 AddStatusEffect("modifier_am_w", "#StatusSpellShield", "#7aaaff", 1);
+AddStatusEffect("modifier_slark_w", "#StatusSpellShield", "#7aaaff", 1);
 AddStatusEffect("modifier_cm_frozen", "#StatusFrozen", "#7ceeff", 1);
 AddStatusEffect("modifier_invoker_e_target", "#StatusSpellbreak", "#fab9ff");
 AddStatusEffect("modifier_wr_a", "#StatusHaste", "#91e246");
@@ -174,6 +176,7 @@ AddStatusEffect("modifier_rubick_q", "#StatusRecast", "#ffffff");
 AddStatusEffect("modifier_void_e_sub", "#StatusRecast", "#ffffff");
 AddStatusEffect("modifier_timber_q_recast", "#StatusRecast", "#ffffff");
 AddStatusEffect("modifier_shaker_q_recast", "#StatusRecast", "#ffffff");
+AddStatusEffect("modifier_tusk_r_sub", "#StatusRecast", "#bcfff8", 1);
 
 AddStatusEffect("modifier_ursa_r", "#StatusUltimate", "#ff1b00", 1);
 AddStatusEffect("modifier_undying_r", "#StatusUltimate", "#30b529", 1);

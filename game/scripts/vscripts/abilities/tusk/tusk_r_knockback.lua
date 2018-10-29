@@ -1,21 +1,21 @@
 TuskRKnockback = TuskRKnockback or class({}, nil, Dash)
 
 function TuskRKnockback:constructor(hero, ability, dir, h, force, knockup, multiplies)
-	if not hero:Alive() then
-		return
-	end
-	if hero ~= ability:GetCaster():GetParentEntity() then hero:Animate(ACT_DOTA_FLAIL) end
-	self.decrease = 10/3
 	if multiplies then
 		local multiplier = 1
 		for _,mod in pairs(hero:AllModifiers()) do if mod.GetKnockbackMultiplier then multiplier = multiplier * mod:GetKnockbackMultiplier() end end 
 		self.knockup = knockup * math.sqrt(multiplier)
 	end
+	self.decrease = 10/3
 	self.force = force / 30
 	self.knockup = self.knockup or knockup
 	self.h = h
 	self.hero = hero
 	self.direction = dir
+	if not hero:Alive() then
+		return
+	end
+	if hero ~= ability:GetCaster():GetParentEntity() then hero:Animate(ACT_DOTA_FLAIL) end
 	self.hero:AddNewModifier(ability:GetCaster():GetParentEntity(), ability, "modifier_tusk_r_target", { duration = self:GetDashTime() })
 	hero:AddKnockbackSource(source)
 	hero.round.spells:AddDash(self)
@@ -68,12 +68,13 @@ function TuskRKnockback:End(Interrupted)
 	self.hero:RemoveModifier("modifier_tusk_r_target")
 	self.destroyed = true
 
+	self.hero:GetUnit():FadeGesture(ACT_DOTA_FLAIL)
+
 	if not Interrupted then
 		if GameRules.GameMode.round.spells.TestCircle(self.hero:GetPos(), self.hero:GetRad()) then
 			Timers:CreateTimer(0.033203125, function()
 				self.hero:FindClearSpace(self.hero:GetPos(), true)
 			end)
-			self.hero:GetUnit():FadeGesture(ACT_DOTA_FLAIL)
 		else
 			self.hero:MakeFall(self.direction * self.force)
 			self.hero.fallingSpeed = -self.knockup * 3

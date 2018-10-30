@@ -5,7 +5,7 @@ function sven_a:OnAbilityPhaseStart()
     hero:EmitSound("Arena.Sven.CastA")
 
     FX("particles/melee_attack_blur_configurable.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero, {
-        cp1 = Vector(SvenUtil.IsEnraged(hero) and 500 or 300, 0, 0),
+        cp1 = Vector(SvenUtil.IsEnraged(hero) and 400 or 300, 0, 0),
         release = true
     })
 

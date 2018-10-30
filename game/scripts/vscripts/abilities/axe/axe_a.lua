@@ -53,4 +53,4 @@ if IsClient() then
     require("wrappers")
 end
 
-Wrappers.AttackAbility(axe_a)
+Wrappers.AttackAbility(axe_a, nil, "particles/econ/items/axe/axe_weapon_bloodchaser/axe_attack_blur_counterhelix_bloodchaser.vpcf")

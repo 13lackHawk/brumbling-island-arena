@@ -85,6 +85,7 @@ function zeus_r:OnChannelFinish(interrupted)
     self.marker = nil
 
     if interrupted then
+        hero:RemoveModifier("modifier_zeus_r")
         return
     end
 

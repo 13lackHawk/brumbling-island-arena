@@ -1,7 +1,20 @@
 modifier_ursa_q_proc = class({})
 
 if IsServer() then
+    function modifier_ursa_q_proc:OnCreated()
+        local unit = self:GetParent()
 
+        local count = unit:GetAbilityCount() - 1
+        for i=0,count do
+            local ability = unit:GetAbilityByIndex(i)
+
+            if ability and (ability:IsInAbilityPhase() or ability:IsChanneling()) then
+                self:OnAbilityStart({ unit = unit, ability = ability })
+                break
+            end
+        end
+    end
+    
     function modifier_ursa_q_proc:OnAbilityImmediate(event)
         self:OnAbilityStart(event)
     end

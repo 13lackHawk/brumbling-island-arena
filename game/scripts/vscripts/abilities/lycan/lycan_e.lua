@@ -17,21 +17,16 @@ function lycan_e:OnSpellStart()
         end
     })
 
-    if hero:FindAbility("lycan_q"):GetPes1() then
-        local pes1 = hero:FindAbility("lycan_q"):GetPes1()
-        if pes1.owner.team == hero.owner.team and pes1:Alive() then
-            pes1:FearBark()
+    for _, ent in pairs(hero.round.spells:GetValidTargets()) do
+        if instanceof(ent, LycanWolf) and ent.owner.team == hero.owner.team then
+            ent:FearBark()
         end
     end
 
-    if hero:FindAbility("lycan_q"):GetPes2() then
-        local pes2 = hero:FindAbility("lycan_q"):GetPes2()
-        if pes2.owner.team == hero.owner.team and pes2:Alive() then
-            pes2:FearBark()
-        end
-    end
-
-    ImmediateEffect("particles/units/heroes/hero_lycan/lycan_howl_cast.vpcf", PATTACH_ABSORIGIN, hero)
+    FX("particles/units/heroes/hero_lycan/lycan_howl_cast.vpcf", PATTACH_ABSORIGIN, hero, {
+        cp0 = hero:GetPos(),
+        cp1 = hero:GetPos() + hero:GetFacing()
+    })
     hero:EmitSound("Arena.Lycan.CastE")
 end
 

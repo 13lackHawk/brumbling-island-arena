@@ -127,6 +127,10 @@ function LycanWolf:FearBark()
 
     ExecuteOrderFromTable({ UnitIndex = unit:GetEntityIndex(), OrderType = DOTA_UNIT_ORDER_STOP })
     StartAnimation(unit, { duration = 0.75, activity = ACT_DOTA_OVERRIDE_ABILITY_1, rate = 1.5 })
+    FX("particles/units/heroes/hero_lycan/lycan_howl_cast.vpcf", PATTACH_ABSORIGIN, self, {
+        cp0 = self:GetPos(),
+        cp1 = self:GetPos() + self:GetFacing()
+    })
 
     self.hero:AreaEffect({
         ability = self.ability,

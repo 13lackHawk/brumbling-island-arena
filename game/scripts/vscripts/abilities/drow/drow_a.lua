@@ -22,7 +22,7 @@ function drow_a:OnSpellStart()
         hitSound = "Arena.Drow.HitA",
         isPhysical = true,
         hitFunction = function(projectile, victim)
-            local distance = (victim:GetPos() - hero:GetPos()):Length2D()
+            local distance = projectile.distancePassed
             local pos = projectile:GetPos()
             if distance >= 1000 then
                 force = 40

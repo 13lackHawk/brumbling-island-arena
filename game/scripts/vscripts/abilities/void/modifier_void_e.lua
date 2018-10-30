@@ -38,3 +38,7 @@ function self:CheckState()
 
     return state
 end
+
+function self:IsInvulnerable()
+    return true
+end

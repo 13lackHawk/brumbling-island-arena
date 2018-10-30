@@ -1,7 +1,7 @@
 ProjectileTimberQ = ProjectileTimberQ or class({}, nil, Projectile)
 
 function ProjectileTimberQ:constructor(round, hero, target, damage, ability)
-	getbase(ProjectileTimberQ).constructor(self, round, {
+    getbase(ProjectileTimberQ).constructor(self, round, {
         owner = hero,
         from = hero:GetPos() * Vector(1, 1, 0) + Vector(0, 0, 100),
         to = target * Vector(1, 1, 0) + Vector(0, 0, 100),
@@ -55,7 +55,7 @@ function ProjectileTimberQ:Update()
 
     if not self.goingBack then
         if self.distance <= self.distancePassed then
-            self.vel = 0
+            self.vel = Vector()
             --if self.hero:HasModifier("modifier_timber_q_recast") and self.recastCheck == false then -- stupid try to fix wrong recast duration
                 --self.recastCheck = true
                 --self.hero:RemoveModifier("modifier_timber_q_recast")
@@ -108,12 +108,14 @@ function ProjectileTimberQ:Retract()
 end
 
 function ProjectileTimberQ:Deflect(by, direction)
-    self.hero:SwapAbilities("timber_q_sub", "timber_q")
-    self.hero:FindAbility("timber_q"):StartCooldown(3.5)
-    direction.z = 0
-    self.direction = direction:Normalized()
-    self.owner = by.owner
-    self:Retract()
+    if not self.goingBack then
+        self.hero:SwapAbilities("timber_q_sub", "timber_q")
+        self.hero:FindAbility("timber_q"):StartCooldown(3.5)
+        direction.z = 0
+        self.direction = direction:Normalized()
+        self.owner = by.owner
+        self:Retract()
+    end
 end
 
 function ProjectileTimberQ:GetNextPosition(pos)

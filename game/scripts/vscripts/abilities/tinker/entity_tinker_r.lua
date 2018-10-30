@@ -42,7 +42,7 @@ function EntityTinkerR:Update()
             if instanceof(target, Projectile) then
                 local velocity = target.vel
                 local reflectedDirection = velocity - 2 * (velocity:Dot(normal)) * normal;
-                target:Deflect(self, reflectedDirection)
+                target:Deflect(self.hero, reflectedDirection)
             else
                 self.round.spells:InterruptDashes(target)
                 SoftKnockback(target, self, normal, 50, { decrease = 3 })

@@ -22,10 +22,9 @@ function venge_a:OnSpellStart()
         hitFunction = function(projectile, target)
             if instanceof(target, Projectile) or instanceof(target, DistanceCappedProjectile) then
                 hero:AddNewModifier(hero, self, "modifier_venge_a", { duration = 1.0 })
-                projectile:Destroy()
-            else
-                target:Damage(projectile, self:GetDamage(), true)
             end
+
+            target:Damage(projectile, self:GetDamage(), true)
         end
     }):Activate()
 

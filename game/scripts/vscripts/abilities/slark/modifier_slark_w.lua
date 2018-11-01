@@ -14,17 +14,18 @@ if IsServer() then
         ability:SetActivated(true)
         ability:StartCooldown(ability:GetCooldown(1))
         if self.particle then
-	        ParticleManager:DestroyParticle(self.particle, false)
-	        ParticleManager:ReleaseParticleIndex(self.particle)
-	    end
+            ParticleManager:DestroyParticle(self.particle, false)
+            ParticleManager:ReleaseParticleIndex(self.particle)
+        end
     end
 end
 
 function modifier_slark_w:AllowAbilityEffect(source,ability)
     local hero = self:GetAbility():GetCaster():GetParentEntity()
+    local exceptions = { ["sven_q"] = true, ["wr_r"] = true, ["tusk_q"] = true }
     if not IsAttackAbility(ability) and source.owner.team ~= hero.owner.team then
         if not instanceof(source, ProjectilePudgeQ) then
-            if instanceof(source, Projectile) and source:Alive() and source.destroyFunction and not source.hitFunction then
+            if instanceof(source, Projectile) and source:Alive() and exceptions[ability:GetName()] then
                 return false
             end
         else
@@ -46,10 +47,10 @@ function modifier_slark_w:GoBang()
     })
 
     hero:GetUnit():StartGestureWithPlaybackRate(ACT_DOTA_CAST_ABILITY_1, 1.5)
-    
+
     ParticleManager:DestroyParticle(self.particle, true)
-	ParticleManager:ReleaseParticleIndex(self.particle)
-	self.particle = nil
+    ParticleManager:ReleaseParticleIndex(self.particle)
+    self.particle = nil
     self:Destroy()
 
     hero:AreaEffect({

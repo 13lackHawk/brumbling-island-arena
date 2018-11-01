@@ -1,4 +1,4 @@
-<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf1:version{d47d07e6-072c-49cb-9718-5bfd8d6c3d21} -->
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf10:version{b5ef673d-0450-4fb0-a91b-bacae6864827} -->
 {
 	_class = "CParticleSystemDefinition"
 	m_flConstantRadius = 30.0
@@ -21,10 +21,6 @@
 			m_nFieldOutput = "7"
 			m_flOutput = 0.0
 			m_flLerpTime = 0.5
-		},
-		{
-			_class = "C_OP_StopAfterCPDuration"
-			m_flDuration = 2.5
 		},
 		{
 			_class = "C_OP_PositionLock"
@@ -60,7 +56,7 @@
 		},
 		{
 			_class = "C_INIT_RingWave"
-			m_flParticlesPerOrbit = 124.0
+			m_flParticlesPerOrbit = 48.0
 			m_flInitialRadius = 96.0
 			m_bEvenDistribution = true
 		},
@@ -68,13 +64,6 @@
 			_class = "C_INIT_RemapInitialDirectionToCPToVector"
 			m_nFieldOutput = "21"
 			m_bNormalize = true
-		},
-		{
-			_class = "C_INIT_PositionPlaceOnGround"
-			m_flOffset = 8.0
-			m_flMaxTraceLength = 1024.0
-			m_CollisionGroupName = "DEBRIS"
-			m_bIncludeWater = true
 		},
 		{
 			_class = "C_INIT_RandomAlpha"
@@ -85,6 +74,13 @@
 			_class = "C_INIT_RandomColor"
 			m_ColorMin = [ 230, 255, 7, 255 ]
 			m_ColorMax = [ 170, 158, 0, 255 ]
+		},
+		{
+			_class = "C_INIT_PositionPlaceOnGround"
+			m_flOffset = 8.0
+			m_flMaxTraceLength = 1024.0
+			m_CollisionGroupName = "DEBRIS"
+			m_bIncludeWater = true
 		},
 	]
 	m_Emitters = 
@@ -115,4 +111,12 @@
 			]
 		},
 	]
+	m_PreEmissionOperators = 
+	[
+		{
+			_class = "C_OP_StopAfterCPDuration"
+		},
+	]
+	m_nBehaviorVersion = 5
+	m_nFirstMultipleOverride_BackwardCompat = 5
 }

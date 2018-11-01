@@ -27,9 +27,9 @@ function sniper_a:OnSpellStart()
         damage = self:GetDamage(),
         isPhysical = true,
         hitFunction = function(projectile, victim)
-            victim:Damage(projectile, projectile.damage, true)
+        	victim:Damage(projectile, projectile.damage, true)
             projectile.hitGroup[victim] = true
-        end
+    	end
     }):Activate()
 
     hero:EmitSound("Arena.Sniper.CastA")
@@ -65,15 +65,11 @@ function ProjectileSniperA:Damage(source)
     ParticleManager:SetParticleControl(dust, 1, self:GetPos())
     ParticleManager:ReleaseParticleIndex(dust)
 
-    if instanceof(source, Projectile) then
-        if self.damaged then
-            self:Destroy()
-        else
-            self.damage = self.damage - 1
-            self.damaged = true
-            --self:SetGraphics("")
-        end
-    else
+    if self.damaged then
         self:Destroy()
+    else
+        self.damage = self.damage - 1
+        self.damaged = true
+        --self:SetGraphics("")
     end
 end

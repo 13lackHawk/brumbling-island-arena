@@ -1,6 +1,6 @@
 storm_spirit_a = class({})
 LinkLuaModifier("modifier_storm_spirit_a", "abilities/storm_spirit/modifier_storm_spirit_a", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_storm_spirit_a_root", "abilities/storm_spirit/modifier_storm_spirit_a_root", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_storm_spirit_a_slow", "abilities/storm_spirit/modifier_storm_spirit_a_slow", LUA_MODIFIER_MOTION_NONE)
 
 function storm_spirit_a:OnSpellStart()
     local hero = self:GetCaster():GetParentEntity()
@@ -27,9 +27,12 @@ function storm_spirit_a:OnSpellStart()
     if charged then
         data.damagesTrees = true
 
-        data.hitFunction = function(projectile, _)
-            projectile.hitSomething = true
-            projectile:Destroy()
+        data.hitFunction = function(projectile, target)
+            if not instanceof(target, Projectile) then
+                projectile.hitSomething = target
+            else
+                target:Damage(projectile, self:GetDamage(), true)
+            end
         end
 
         data.destroyFunction = function(projectile)
@@ -40,9 +43,15 @@ function storm_spirit_a:OnSpellStart()
             projectile:AreaEffect({
                 ability = self,
                 filter = Filters.Area(projectile:GetPos(), 350),
-                damage = self:GetDamage(),
-                modifier = { name = "modifier_storm_spirit_a_root", duration = 0.7, ability = self },
-                isPhysical = true
+                modifier = { name = "modifier_storm_spirit_a_slow", duration = 0.7, ability = self },
+                isPhysical = true,
+                action = function(target)
+                    if target == projectile.hitSomething then
+                        target:Damage(projectile,self:GetDamage() * 2,true)
+                    else
+                        target:Damage(projectile, self:GetDamage(), true)
+                    end
+                end
             })
 
             FX("particles/units/heroes/hero_stormspirit/stormspirit_overload_discharge.vpcf", PATTACH_WORLDORIGIN, projectile, {

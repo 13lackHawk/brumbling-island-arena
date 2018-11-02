@@ -11,7 +11,7 @@ if IsServer() then
         local hero = self:GetParent():GetParentEntity()
         hero:FindAbility("timber_a"):SetActivated(true)
         
-        self.target[self:GetParent():GetParentEntity()] = nil
+        self.targets[self:GetParent():GetParentEntity()] = nil
     end
 end
 

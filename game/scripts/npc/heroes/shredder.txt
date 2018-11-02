@@ -37,7 +37,7 @@
 		"Ability5" "placeholder_slot_f"
 		"Ability6" "timber_r"
 		"Ability7" "timber_q_sub"
-		"Ability8" "timber_r_sub"
-		"Ability9" "timber_a"
+		"Ability8" "timber_a"
+		"Ultimate" "timber_r"
 	}
 }

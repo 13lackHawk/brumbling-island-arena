@@ -45,6 +45,10 @@ function modifier_drow_w:GetPriority()
     return MODIFIER_PRIORITY_SUPER_ULTRA
 end
 
+function modifier_drow_w:Update()
+    self.damageReceived = 0
+end
+
 function modifier_drow_w:OnDamageReceived(source, hero, amount)
     self.damageReceived = (self.damageReceived or 0) + amount
     if self.damageReceived >= 3 then

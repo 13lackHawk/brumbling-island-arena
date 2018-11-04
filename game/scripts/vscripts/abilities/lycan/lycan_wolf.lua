@@ -136,8 +136,8 @@ function LycanWolf:FearBark()
         ability = self.ability,
         filter = Filters.Area(self:GetPos(), 350),
         onlyHeroes = true,
-        modifier = { name = "modifier_lycan_e", ability = self.hero:FindAbility("lycan_e"), duration = 1.0 },
         action = function(target)
+            target:AddNewModifier(self.hero, self, "modifier_lycan_e", { duration = 1.0 }):Update()
             if instanceof(target, Hero) then
                 target:AddKnockbackSource(hero, 2.0)
             end

@@ -1,7 +1,7 @@
 shaker_e = class({})
 
 LinkLuaModifier("modifier_shaker_e", "abilities/shaker/modifier_shaker_e", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_shaker_e_debuff", "abilities/shaker/modifier_shaker_e_debuff", LUA_MODIFIER_MOTION_NONE)
+--LinkLuaModifier("modifier_shaker_e_debuff", "abilities/shaker/modifier_shaker_e_debuff", LUA_MODIFIER_MOTION_NONE)
 
 function shaker_e:OnSpellStart()
     Wrappers.DirectionalAbility(self, 550, 350)
@@ -29,7 +29,7 @@ function shaker_e:OnSpellStart()
             hero:AreaEffect({
                 ability = self,
                 filter = Filters.Area(target, 256),
-                --modifier = { name = "modifier_shaker_e_debuff", duration = 1.25, ability = self },
+                modifier = { name = "modifier_stunned_lua", duration = 0.5, ability = self },
             })
 
             hero:EmitSound("Arena.Shaker.HitE")

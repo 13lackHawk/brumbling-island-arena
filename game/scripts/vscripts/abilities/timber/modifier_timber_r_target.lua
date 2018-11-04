@@ -22,6 +22,7 @@ if IsServer() then
                 mod:SetStackCount(math.min(mod:GetStackCount() + 1, 3))
                 mod:ForceRefresh()
             end
+            parent:Damage(caster, 1)
         end
 
         FX("particles/timber_r/timber_r_hit.vpcf", PATTACH_CUSTOMORIGIN, self:GetCaster(), {

@@ -15,19 +15,26 @@ if IsServer() then
         local target = event.unit:GetParentEntity()
         local shouldBeAffectedByAbility = target:FindModifier("modifier_undying_e_target")
         local caster = self:GetCaster():GetParentEntity()
+        local blocked = target:AllowAbilityEffect(caster, self:GetAbility()) == false
 
         if not event.ability.canBeSilenced then
             return
         end
 
-        if shouldBeAffectedByAbility then
-            FX("particles/units/heroes/hero_undying/undying_soul_rip_heal.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster.hero, {
+        if shouldBeAffectedByAbility and not blocked then
+            --[[FX("particles/units/heroes/hero_undying/undying_soul_rip_heal.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster.hero, {
                cp0 = { ent = caster.hero:GetUnit(), point = "attach_hitloc" },
                cp1 = { ent = self:GetParent(), point = "attach_hitloc" },
                release = true
+            })]]--
+            FX("particles/undying_e/undying_e_hit.vpcf", PATTACH_CUSTOMORIGIN, self:GetCaster(), {
+                cp0 = self:GetCaster():GetAbsOrigin() + Vector(0, 0, 200),
+                cp1 = { ent = self:GetParent(), point = "attach_hitloc" },
+                release = true
             })
-            caster.hero:Heal(2)
-            target:EmitSound("Arena.Undying.ProcE")
+            self:GetParent():EmitSound("Arena.Undying.HitE")
+            target:Damage(caster, self:GetAbility():GetDamage())
+            --target:EmitSound("Arena.Undying.ProcE")
         end
     end
 
@@ -39,7 +46,7 @@ if IsServer() then
     function self:OnIntervalThink()
         self:CreateParticle()
 
-        local parent = self:GetParent():GetParentEntity()
+        --[[local parent = self:GetParent():GetParentEntity()
         local caster = self:GetCaster():GetParentEntity()
         local blocked = parent:AllowAbilityEffect(caster, self:GetAbility()) == false
 
@@ -52,7 +59,7 @@ if IsServer() then
             cp1 = { ent = self:GetParent(), point = "attach_hitloc" },
             release = true
         })
-        self:GetParent():EmitSound("Arena.Undying.HitE")
+        self:GetParent():EmitSound("Arena.Undying.HitE")]]--
     end
 
     function self:CreateParticle()

@@ -42,7 +42,8 @@ var recastModifiers = [
     "modifier_void_e_sub",
     "modifier_timber_q_recast",
     "modifier_shaker_q_recast",
-    "modifier_tusk_r_sub"
+    "modifier_tusk_r_sub",
+    "modifier_lycan_q_recast"
 ];
 
 var specialLayouts = {
@@ -159,6 +160,8 @@ AddStatusEffect("modifier_timber_e_root", "#StatusRooted", "#b5ae2f");
 AddStatusEffect("modifier_timber_e_root", "#StatusRooted", "#b5ae2f");
 AddStatusEffect("modifier_ursa_q_proc", "#StatusSpellbreak", "#FF6A00");
 AddStatusEffect("modifier_axe_q", "#StatusTaunted", "#e61212");
+AddStatusEffect("modifier_axe_w", "#StatusSpellShield", "#e61212", 1);
+AddStatusEffect("modifier_axe_w_bonus", "#StatusInvulnerable", "#e61212", 1);
 AddStatusEffect("modifier_axe_rage", "#StatusRampage", "#e61212");
 AddStatusEffect("modifier_storm_spirit_a_root", "#StatusRooted", "#07b5f5");
 AddStatusEffect("modifier_sniper_r", "#StatusAiming", "#f2561d");
@@ -177,6 +180,7 @@ AddStatusEffect("modifier_void_e_sub", "#StatusRecast", "#ffffff");
 AddStatusEffect("modifier_timber_q_recast", "#StatusRecast", "#ffffff");
 AddStatusEffect("modifier_shaker_q_recast", "#StatusRecast", "#ffffff");
 AddStatusEffect("modifier_tusk_r_sub", "#StatusRecast", "#bcfff8", 1);
+AddStatusEffect("modifier_lycan_q_recast", "#StatusRecast", "#ffffff");
 
 AddStatusEffect("modifier_ursa_r", "#StatusUltimate", "#ff1b00", 1);
 AddStatusEffect("modifier_undying_r", "#StatusUltimate", "#30b529", 1);

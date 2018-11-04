@@ -4,6 +4,6 @@
 		"ScriptFile" "abilities/timber/timber_w"
 		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityTextureName" "shredder_reactive_armor"
-		"AbilityCooldown" "6.0"
+		"AbilityCooldown" "4.0"
 	}
 }

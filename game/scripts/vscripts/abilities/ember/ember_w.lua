@@ -9,17 +9,17 @@ function ember_w:OnSpellStart()
 
     DistanceCappedProjectile(hero.round, {
         ability = ability,
-        owner = hero,
+        owner = trueHero,
         from = hero:GetPos() + Vector(0, 0, 128),
         to = target + Vector(0, 0, 128),
         speed = 1250,
         graphics = "particles/ember_w/ember_w.vpcf",
         distance = 1050,
+        hitModifier = { name = "modifier_ember_w", duration = 1.0, ability = ability },
         hitSound = "Arena.Ember.HitW",
         hitFunction = function(projectile, target)
-            target:AddNewModifier(trueHero, ability, "modifier_ember_w", { duration = 1.0 })
-            if EmberUtil.Burn(trueHero, target, ability) then
-                target:Damage(trueHero, ability:GetDamage())
+            if EmberUtil.Burn(projectile:GetTrueHero(), target, ability) then
+                target:Damage(projectile, ability:GetDamage())
             end
         end,
         destroyFunction = function()

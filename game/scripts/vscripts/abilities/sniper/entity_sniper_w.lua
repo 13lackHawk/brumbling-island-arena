@@ -19,6 +19,10 @@ end
 
 function EntitySniperW:Update()
     getbase(EntitySniperW).Update(self)
+
+    if GameRules:GetGameTime() - (self.startTime or 0) > 15 then
+        self:Destroy()
+    end
 end
 
 function EntitySniperW:CollidesWith(target)

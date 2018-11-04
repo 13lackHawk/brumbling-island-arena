@@ -14,7 +14,11 @@ function self:IsDebuff()
 end
 
 function self:GetModifierMoveSpeedBonus_Percentage(params)
-    return -15 * self:GetStackCount()
+    if self:GetStackCount() <= 3 then
+        return -15 * self:GetStackCount()
+    else 
+        return -45
+    end
 end
 
 function self:GetEffectName()

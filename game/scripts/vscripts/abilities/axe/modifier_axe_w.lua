@@ -18,8 +18,11 @@ function self:GetStatusEffectName()
 end
 
 function self:OnDamageReceived(source, hero, amount)
+    local caster = self:GetCaster():GetParentEntity()
+    caster:AddNewModifier(caster, caster:FindAbility("axe_w"), "modifier_axe_w_dmg", { duration = 2.5 }):GetDmg(amount)
     self.damageReceived = amount
     self:Destroy()
+    return false
 end
 
 if IsServer() then

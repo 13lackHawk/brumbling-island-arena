@@ -6,7 +6,7 @@ LinkLuaModifier("modifier_tinker_q", "abilities/tinker/modifier_tinker_q", LUA_M
 
 function brew_q:AddBeerModifier(target)
     if self:CountBeer(target) < 8 then
-        target:AddNewModifier(self:GetCaster().hero, self, "modifier_brew_beer", { duration = 9.5 })
+        target:AddNewModifier(self:GetCaster().hero, self, "modifier_brew_beer", {}) -- { duration = 9.5 }
     end
 end
 

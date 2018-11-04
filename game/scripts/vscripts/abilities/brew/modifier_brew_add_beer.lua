@@ -6,7 +6,7 @@ end
 
 if IsServer() then
     function modifier_brew_add_beer:OnCreated()
-        self:StartIntervalThink(2.5)
+        self:StartIntervalThink(3.25)
     end
 
     function modifier_brew_add_beer:OnIntervalThink()

@@ -6,7 +6,7 @@
 		"AbilityTextureName" "undying_tombstone"
 		"AbilityCooldown" "10.0"
 		"AbilityCastPoint" "0.15"
-		"Damage" "3"
+		"Damage" "2"
 
 		"TargetingIndicator" {
 			"Type" "TARGETING_INDICATOR_AOE"

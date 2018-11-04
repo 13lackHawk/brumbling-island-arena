@@ -3,6 +3,7 @@ lycan_q = class({})
 LinkLuaModifier("modifier_lycan_q", "abilities/lycan/modifier_lycan_q", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_lycan_instinct", "abilities/lycan/modifier_lycan_instinct", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_lycan_bleed", "abilities/lycan/modifier_lycan_bleed", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_lycan_q_recast", "abilities/lycan/modifier_lycan_q_recast", LUA_MODIFIER_MOTION_NONE)
 
 require('abilities/lycan/lycan_wolf')
 
@@ -11,9 +12,11 @@ function lycan_q:OnSpellStart()
 
     local hero = self:GetCaster().hero
     local target = self:GetCursorPosition() * Vector(1, 1, 0)
+    hero:AddNewModifier(hero, hero:FindAbility("lycan_e"), "modifier_lycan_q_recast", { duration = 2.0 })
 
     LycanWolf(hero.round, hero, target, 1, self):Activate()
     LycanWolf(hero.round, hero, target, -1, self):Activate()
+    hero:SwapAbilities("lycan_q", "lycan_q_sub")
 
     hero:EmitSound("Arena.Lycan.CastQ")
     hero:EmitSound("Arena.Lycan.CastQ.Voice")

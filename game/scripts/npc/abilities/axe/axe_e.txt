@@ -4,7 +4,7 @@
 		"ScriptFile" "abilities/axe/axe_e"
 		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES | DOTA_ABILITY_BEHAVIOR_IGNORE_TURN | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityTextureName" "axe_culling_blade"
-		"AbilityCooldown" "3.5"
+		"AbilityCooldown" "5.5"
 		"Damage" "2"
 
 		"TargetingIndicator" {

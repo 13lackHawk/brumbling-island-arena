@@ -33,6 +33,14 @@ function modifier_drow_w:CheckState()
     return state
 end
 
+function modifier_drow_w:DeclareFunctions()
+    local funcs = {
+        MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE,
+    }
+
+    return funcs
+end
+
 function modifier_drow_w:GetPriority()
     return MODIFIER_PRIORITY_SUPER_ULTRA
 end
@@ -43,4 +51,8 @@ function modifier_drow_w:OnDamageReceived(source, hero, amount)
         self:Destroy()
     end
     return amount
+end
+
+function modifier_drow_w:GetModifierMoveSpeedBonus_Percentage(params)
+    return -25
 end

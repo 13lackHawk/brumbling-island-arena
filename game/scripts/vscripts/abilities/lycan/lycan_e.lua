@@ -17,11 +17,11 @@ function lycan_e:OnSpellStart()
         end
     })
 
-    for _, ent in pairs(hero.round.spells:GetValidTargets()) do
+    --[[for _, ent in pairs(hero.round.spells:GetValidTargets()) do
         if instanceof(ent, LycanWolf) and ent.owner.team == hero.owner.team then
             ent:FearBark()
         end
-    end
+    end]]--
 
     FX("particles/units/heroes/hero_lycan/lycan_howl_cast.vpcf", PATTACH_ABSORIGIN, hero, {
         cp0 = hero:GetPos(),

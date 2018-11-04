@@ -16,6 +16,8 @@ if IsServer() then
 
                 targetPos = target:GetPos()
                 CreateAOEMarker(hero, targetPos, 250, 0.6, Vector(250, 50, 50))
+                CreateAOEMarker(hero, targetPos, 250, 0.6, Vector(250, 50, 50))
+                CreateAOEMarker(hero, targetPos, 250, 0.6, Vector(250, 50, 50))
 
                 TimedEntity(0.5, function()
                     hero:AreaEffect({

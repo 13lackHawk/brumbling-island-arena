@@ -4,7 +4,7 @@
 		"ScriptFile" "abilities/timber/timber_q"
 		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
 		"AbilityTextureName" "shredder_chakram"
-		"AbilityCooldown" "3.5"
+		"AbilityCooldown" "5.5"
 		"AbilityCastPoint" "0.135"
 		"Damage" "1"
 

@@ -1,0 +1,9 @@
+"DOTAAbilities" {
+	"lycan_q_sub" {
+		"BaseClass" "ability_lua"
+		"ScriptFile" "abilities/lycan/lycan_q_sub"
+		"AbilityBehavior" "DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName" "lycan_howl"
+		"AbilityCastPoint" "0.1"
+	}
+}

@@ -10,7 +10,7 @@ function ember_q:OnSpellStart()
 
     DistanceCappedProjectile(hero.round, {
         ability = ability,
-        owner = hero,
+        owner = trueHero,
         from = hero:GetPos(),
         to = target,
         speed = 1250,
@@ -20,10 +20,10 @@ function ember_q:OnSpellStart()
         continueOnHit = true,
         damagesTrees = true,
         hitFunction = function(projectile, target)
-            target:Damage(trueHero, ability:GetDamage())
+            target:Damage(projectile, ability:GetDamage())
 
-            if EmberUtil.Burn(trueHero, target, ability) then
-                target:AddNewModifier(trueHero, ability, "modifier_ember_q", { duration = 2.5 })
+            if EmberUtil.Burn(projectile:GetTrueHero(), target, ability) then
+                target:AddNewModifier(projectile:GetTrueHero(), ability, "modifier_ember_q", { duration = 2.5 })
             end
         end
     }):Activate()

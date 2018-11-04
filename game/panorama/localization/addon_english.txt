@@ -114,7 +114,7 @@
 		"legion_commander_DescE" "Dash + short stun"
 		"legion_commander_DescR" "AOE buff, immortality + reduced cooldowns"
 
-		"lycan_DescQ" "2 wolves run to the target point"
+		"lycan_DescQ" "2 wolves run to the target point, can be recasted"
 		"lycan_DescW" "AOE damage"
 		"lycan_DescE" "AOE fear"
 		"lycan_DescR" "Transform. Speed bonus. Power up"
@@ -487,16 +487,17 @@
 		"AbilityTooltip_sk_e"							"Dash to the target point<br><br>Can't go though holes in the ground"
 		"AbilityTooltip_sk_r"							"Create a sandstorm for 7.5 seconds which renders your hero invisible and gives him bonus speed"
 
-		"AbilityTooltip_storm_spirit_a"					"Casting spells makes next attack deal double damage and slow enemies in the area of impact"
+		"AbilityTooltip_storm_spirit_a"					"Casting spells makes next attack roots targets in the area of impact"
 		"AbilityTooltip_storm_spirit_q"					"Launch a wave that creates a <font color=\"#00EFEF\"><b>Remnant</b></font> at the target point<br/><font color=\"#00EFEF\"><b>Remnant</b></font> auto detonates after a delay when an enemy comes near it"
 		"AbilityTooltip_storm_spirit_w"					"Launch a projectile pulling first enemy hit towards you"
 		"AbilityTooltip_storm_spirit_e"					"Target a <font color=\"#00EFEF\"><b>Remnant</b></font> and quickly dash to it"
 		"AbilityTooltip_storm_spirit_r"					"Ressurect up to 3 last dead <font color=\"#00EFEF\"><b>Remnants</b></font>"
 
-		"AbilityTooltip_lycan_a"						"Inflicts <font color=\"#D10000\"><b>Bleed</b></font>"
-		"AbilityTooltip_lycan_q"						"Summon two wolves running to the target point<br><br>Enemies bitten start <font color=\"#D10000\"><b>Bleeding</b></font>"
+		"AbilityTooltip_lycan_a"						"Inflicts <font color=\"#D10000\"><b>Bleed</b></font> and disarms"
+		"AbilityTooltip_lycan_q"						"Summon two wolves running to the target point<br>Enemies bitten start <font color=\"#D10000\"><b>Bleeding</b></font><br>Can be recasted to make wolves fear enemies around them"
+		"AbilityTooltip_lycan_q_sub"					"Wolves starts howling, causes enemies around them to flee<br>Wolves dies after cast"
 		"AbilityTooltip_lycan_w"						"Target an area, damage enemies and apply <font color=\"#D10000\"><b>Bleed</b></font> after a delay"
-		"AbilityTooltip_lycan_e"						"Causes enemies around you to flee"
+		"AbilityTooltip_lycan_e"						"Causes enemies around you to flee<br>Fear is removed if target takes 3 or more damage"
 		"AbilityTooltip_lycan_r"						"<font color=\"#DAFF7F\"><b>Channeling</b></font><br>Transform, gaining huge base movement speed<br><br><font color=\"gold\"><b>A</b></font> <font color=\"#D10000\"><b>Bleeding</b></font> enemies take double damage<br><font color=\"gold\"><b>Q</b></font> Your Wolves move faster<br><font color=\"gold\"><b>W</b></font> Applies a major slow<br><font color=\"gold\"><b>E</b></font> Fleeing and <font color=\"#D10000\"><b>Bleeding</b></font> enemies are silenced"
 
 		"AbilityTooltip_phoenix_q"						"Dash forward, damaging and slowing enemies on your path"
@@ -675,11 +676,26 @@
 		"AbilityTooltip_void_e_sub"				"Jump at the target point<br/>Enemies on the way takes 2 damage and slowed for 2 secs<br/><b>DOES NOT REGENERATE HP!</b>"
 		"AbilityTooltip_void_r"					"<font color=\"#DAFF7F\"><b>Channeling</b></font><br/>Launch up to 4 meteors at your cursor position every 0.6 sec<br/>Meteors deals 2 dmg on impact and <font color=\"gold\"><b>MASSIVE</b></font> damage to the ground"
 
+		"AbilityTooltip_timber_a"				"Deals 2 damage to <font color=\"#24d143\"><b>Trees</b></font><br/>Any heal received is transformed into shield"
+		"AbilityTooltip_timber_q"				"Fires a saw blade at the target location where it will spin in place, dealing 1 damage in an area around it every 0.75 sec<br>Lasts for 2.25 sec or you can return it manually using recast<br>Also deals 1 dmg when coming back to owner"
+		"AbilityTooltip_timber_q_sub"			"Return the saw"
+		"AbilityTooltip_timber_w"				"Upgrade armor with <font color=\"#d47b22\"><b>Spikes</b></font> for 0.8 secs but disable your basic attack<br>Returns all damage taken back to the damage dealer<br><b>Your hero still receives damage!</b>"
+		"AbilityTooltip_timber_e"				"Fires a chain that embeds itself in the first target it hits, pulling you towards it and dealing 2 damage<br>Target hit will be rooted for minimum 0.5 sec or maximum 3.0 secs<br>Root duration depends on hook distance travelled"
+		"AbilityTooltip_timber_r"				"<font color=\"#4a83ed\"><b>Has 2 charges</b></font><br/>Throw an unstable electromechanism which slows targets around itself and deals damage every second<br>The longer targets stand in its slow radius, the stronger they're slowed<br>Every charge has 9 sec cooldown and acts independently"
+		"AbilityTooltip_timber_r_sub"			"<font color=\"#4a83ed\"><b>Has 2 charges</b></font><br/>Throw an unstable electromechanism which slows targets around itself and deals damage every second<br>The longer targets stand in its slow radius, the stronger they're slowed<br>Every charge has 9 sec cooldown and acts independently"
+
+		"AbilityTooltip_axe_a"					"Deals 1 dmg around your hero<br>When you miss an ability you will receive a <font color=\"#e61212\"><b>Rampage</b></font> stack<br>If you collect 3 stacks, then your hero's basic attack will deal double damage and any damage you take is decreased by 1"
+		"AbilityTooltip_axe_q"					"Throw an axe, deals 2 dmg and provokes enemy to run towards your hero for 1.5 seconds<br>Effect will disappear if target comes too close to your hero"
+		"AbilityTooltip_axe_w"					"Going in aggresive stance for 0.8 seconds, absorbing and delaying first damage taken<br>Taking damage removes that stance and your hero receives movespeed bonus and invulnerability<br/>Bonus duration depends on how big instance of damage you took<br>The delayed damage dealt after 2.5 seconds passed"
+		"AbilityTooltip_axe_e"					"Jumps and smash target area with his axe<br>Pushing back all enemies after landing and deals damage"
+		"AbilityTooltip_axe_r"					"<font color=\"#DAFF7F\"><b>Chanelling</b></font><br/>Fire a long wide wave, slowing enemies caught for 3 seconds and dealing 4 dmg<br>Can’t go through holes in the ground"
+
 		"ModifierTooltip_modifier_charges"						"Ability charges"
 		"ModifierTooltip_modifier_stunned_lua"					"Stunned"
 		"ModifierTooltip_modifier_silence_lua"					"Silenced"
 		"ModifierTooltip_modifier_knockback_lua"				"Knocked back"
 		"ModifierTooltip_modifier_attack_speed"					"Basic attack cooling down"
+		"ModifierTooltip_modifier_shield"						"Количество щита"
 
 		"ModifierTooltip_modifier_zeus_a"						"Will be stunned if hit by another ability"
 		"ModifierTooltip_modifier_zeus_w"						"Sped up"
@@ -797,7 +813,8 @@
 
 		"ModifierTooltip_modifier_tinker_q"						"Disarmed"
 
-		"ModifierTooltip_modifier_slark_a"						"Will return stolen health"
+		"ModifierTooltip_modifier_slark_a"						"Will return stolen speed"
+		"ModifierTooltip_modifier_slark_a_dmg"					"Basic attack deals double damage"
 		"ModifierTooltip_modifier_slark_q"						"Slowed"
 		"ModifierTooltip_modifier_slark_e"						"Nabbing"
 		"ModifierTooltip_modifier_slark_e_leash"				"You are bound!"
@@ -859,6 +876,20 @@
 		"ModifierTooltip_modifier_void_e_slow"					"Slowpoke"
 		"ModifierTooltip_modifier_void_e_disarm"				"Disarmed"
 
+		"ModifierTooltip_modifier_timber_w"						"Hedgehog"
+		"ModifierTooltip_modifier_timber_e_root"				"Rooted"
+		"ModifierTooltip_modifier_timber_r_slow"				"Slowed"
+		"ModifierTooltip_modifier_timber_r_target"				"Will receive slow and damage soon"
+		"ModifierTooltip_modifier_timber_r_charges"				"<font color=\"#4a83ed\"><b>Ultimate</b></font> charges"
+		"ModifierTooltip_modifier_timber_heal_to_shield"		"Any heal received is transformed into unlimited duration shield"  
+
+		"ModifierTooltip_modifier_axe_q"						"Taunted"
+		"ModifierTooltip_modifier_axe_w"						"Taking damage will give you bonus"
+		"ModifierTooltip_modifier_axe_w_bonus"					"Faster and invulnerable"
+		"ModifierTooltip_modifier_axe_rage"						"OOOH CYKA ITS <font color=\"#e61212\"><b>RAMPAGE!</b></font>"
+		"ModifierTooltip_modifier_axe_counter"					"Turn on <font color=\"#e61212\"><b>Rampage</b></font> if have 3 stacks"
+		"ModifierTooltip_modifier_axe_r"						"Sloowed"  
+
 		"ModifierTooltip_modifier_rune_blue"                    "Dealing damage to enemy heroes will briefly stun them"
 
 		"StatusStunned" "Stunned"
@@ -887,6 +918,7 @@
 		"StatusRampage" "Rampage"
 		"StatusAiming"	"Aiming"
 		"StatusHangover" "Drunk"
+		"StatusInvulnerable" "Invulnerable"
 	}
 }
 

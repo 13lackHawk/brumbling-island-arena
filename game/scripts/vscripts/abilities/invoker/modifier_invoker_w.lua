@@ -1,20 +1,20 @@
 modifier_invoker_w = class({})
 local self = modifier_invoker_w
-self.itsTimeToStop = 0
+--self.itsTimeToStop = 0
 
 if IsServer() then
     function modifier_invoker_w:OnCreated(kv)
         local effect = ParticleManager:CreateParticle("particles/items_fx/ethereal_blade_explosion.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent())
         ParticleManager:SetParticleControlEnt(effect, 1, self:GetParent(), PATTACH_POINT_FOLLOW, "attach_hitloc", self:GetParent():GetAbsOrigin(), true)
         self:AddParticle(effect, false, false, 0, true, false)
-        self:StartIntervalThink(0.1)
+        --self:StartIntervalThink(0.1)
     end
 
-    function modifier_invoker_w:OnIntervalThink()
+    --[[function modifier_invoker_w:OnIntervalThink()
         if self.itsTimeToStop >= 2 then
             self:Destroy()
         end
-    end
+    end]]--
 end
 
 function modifier_invoker_w:DeclareFunctions()
@@ -33,7 +33,7 @@ end
 
 function modifier_invoker_w:OnDamageReceived(source, hero, amount, isPhysical)
     if not isPhysical then
-        self.itsTimeToStop = self.itsTimeToStop + 1
+        --self.itsTimeToStop = self.itsTimeToStop + 1
         return amount * 2
     end
 

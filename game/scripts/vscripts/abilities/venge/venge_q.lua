@@ -8,17 +8,15 @@ function venge_q:OnSpellStart()
 
     DistanceCappedProjectile(hero.round, {
         ability = ability,
-        owner = hero,
+        owner = trueHero,
         from = hero:GetPos() + Vector(0, 0, 128),
         to = target + Vector(0, 0, 128),
         speed = 1250,
         graphics = "particles/venge_q/venge_q.vpcf",
         distance = 950,
         hitSound = "Arena.Venge.HitQ",
-        hitFunction = function(projectile,target) 
-            target:Damage(trueHero, ability:GetDamage())
-            target:AddNewModifier(trueHero, ability, "modifier_stunned_lua", { duration = 0.85 })
-        end
+        damage = ability:GetDamage(),
+        hitModifier = { name = "modifier_stunned_lua", duration = 0.85, ability = ability }
     }):Activate()
 
     hero:EmitSound("Arena.Venge.CastQ")

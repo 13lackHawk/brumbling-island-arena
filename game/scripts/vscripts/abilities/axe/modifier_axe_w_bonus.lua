@@ -17,7 +17,7 @@ function modifier_axe_w_bonus:IsInvulnerable()
 end
 
 function modifier_axe_w_bonus:GetEffectName()
-    return "particles/axe_w/axe_w_bonus.vpcf"
+    return "particles/axe_w/axe_w.vpcf"
 end
 
 function modifier_axe_w_bonus:GetEffectAttachType()

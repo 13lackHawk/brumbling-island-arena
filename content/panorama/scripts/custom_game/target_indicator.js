@@ -573,7 +573,7 @@ indicatorTypes["TARGETING_INDICATOR_ANTIMAGE_Q"] = function(data, unit) {
 
     this.UpdateParticle = function(pos, to, particle, side, prog) {
         var dir = to.minus(pos).normalize();
-        pos = pos.add(new Vector(side * dir.y, side * -dir.x).scale(100));
+        pos = pos.add(new Vector(side * dir.y, side * -dir.x).scale(133));
 
         var length = to.minus(pos).length();
         var newLength = Clamp(length, GetNumber(data.MinLength, 0, unit), GetNumber(data.MaxLength, Number.MAX_VALUE, unit));

@@ -17,6 +17,11 @@ function slark_a:OnSpellStart()
     local forward = self:GetDirection()
     local damage = self:GetDamage()
     local force = 20
+    local mod = hero:FindModifier("modifier_slark_a_dmg")
+
+    if mod then
+        damage = damage * 2
+    end
 
     hero:AreaEffect({
         ability = self,

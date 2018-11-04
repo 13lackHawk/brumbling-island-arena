@@ -12,7 +12,7 @@ function shaker_w:OnSpellStart()
     hero:AddNewModifier(hero, hero:FindAbility("shaker_a"), "modifier_shaker_a", { duration = 5 })
     hero:AreaEffect({
         ability = self,
-        filter = Filters.Area(pos, 300),
+        filter = Filters.Area(pos, 400),
         damage = self:GetDamage(),
         filterProjectiles = true,
         action = function(target)
@@ -30,7 +30,7 @@ function shaker_w:OnSpellStart()
 
     local effect = ImmediateEffect("particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf", PATTACH_ABSORIGIN, hero)
     ParticleManager:SetParticleControl(effect, 0, pos)
-    ParticleManager:SetParticleControl(effect, 1, Vector(200, 0, 0))
+    ParticleManager:SetParticleControl(effect, 1, Vector(300, 0, 0))
 
     ScreenShake(pos, 5, 150, 0.45, 3000, 0, true)
     hero:EmitSound("Arena.Shaker.CastW")

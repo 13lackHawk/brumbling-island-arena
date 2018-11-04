@@ -1,5 +1,6 @@
 slark_e = class({})
 
+LinkLuaModifier("modifier_slark_a_dmg", "abilities/slark/modifier_slark_a_dmg", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_slark_e", "abilities/slark/modifier_slark_e", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_slark_e_leash", "abilities/slark/modifier_slark_e_leash", LUA_MODIFIER_MOTION_NONE)
 
@@ -31,6 +32,7 @@ function slark_e:OnSpellStart()
                 hero:GetWearableBySlot("weapon"):RemoveEffects(EF_NODRAW)
                 cooldownQ:EndCooldown()
             end
+            hero:AddNewModifier(hero, self, "modifier_slark_a_dmg", { duration = 2.5 })
             hero:EmitSound("Arena.Slark.HitE.Voice")
         end,
         notBlockedAction = function(target, wasBlocked)

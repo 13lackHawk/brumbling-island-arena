@@ -276,7 +276,7 @@ function Hero:Heal(amount)
             modifierShield = self.unit:AddNewModifier(self.unit, nil, "modifier_shield", {})
         end
         if modifierShield then
-            modifierShield:SetStackCount(math.min(modifierShield:GetStackCount() + amount, 20))
+            modifierShield:SetStackCount(math.min(modifierShield:GetStackCount() + amount, 10))
             modifierShield:ForceRefresh()
         end
         FX("particles/msg_damage.vpcf", PATTACH_CUSTOMORIGIN, GameRules:GetGameModeEntity(), {

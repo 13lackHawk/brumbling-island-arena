@@ -27,9 +27,15 @@ function sniper_a:OnSpellStart()
         damage = self:GetDamage(),
         isPhysical = true,
         hitFunction = function(projectile, victim)
+<<<<<<< HEAD
+            victim:Damage(projectile, projectile.damage, true)
+            projectile.hitGroup[victim] = true
+        end
+=======
         	victim:Damage(projectile, projectile.damage, true)
             projectile.hitGroup[victim] = true
     	end
+>>>>>>> 4658a595d96ca1e27655d64e132e3c02642443d4
     }):Activate()
 
     hero:EmitSound("Arena.Sniper.CastA")
@@ -72,4 +78,8 @@ function ProjectileSniperA:Damage(source)
         self.damaged = true
         --self:SetGraphics("")
     end
+<<<<<<< HEAD
 end
+=======
+end
+>>>>>>> 4658a595d96ca1e27655d64e132e3c02642443d4

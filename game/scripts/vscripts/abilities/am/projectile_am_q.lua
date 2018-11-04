@@ -6,7 +6,7 @@ function ProjectileAMQ:constructor(round, hero, target, ability, particle, slot,
 
 	getbase(ProjectileAMQ).constructor(self, round, {
         owner = hero,
-        from = hero:GetPos() * Vector(1, 1, 0) + Vector(0, 0, 100) + self.perp * 100,
+        from = hero:GetPos() * Vector(1, 1, 0) + Vector(0, 0, 100) + self.perp * 133,
         to = target * Vector(1, 1, 0) + Vector(0, 0, 100),
         speed = 5000,
         graphics = particle,
@@ -32,7 +32,8 @@ function ProjectileAMQ:constructor(round, hero, target, ability, particle, slot,
     self.hitGroup[hero] = self.gracePeriod
     self.hitFunction = function(self, target)
         target:EmitSound("Arena.AM.Hit")
-        target:Damage(self, self.ability:GetDamage(), self.isPhysical)
+        --if instanceof(target, Rune) and (GameRules:GetGameTime() - (self.startTime or 0) < 1) then
+            target:Damage(self, self.ability:GetDamage(), self.isPhysical)
 
         local direction = (target:GetPos() - self:GetPos()):Normalized()
 

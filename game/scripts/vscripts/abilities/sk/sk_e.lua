@@ -37,7 +37,7 @@ function sk_e:OnSpellStart()
         filterProjectiles = true,
         damage = self:GetDamage(),
         knockback = { force = 0, knockup = 70, decrease = 6 },
-        modifier = { name = "modifier_stunned_lua", ability = self, duration = 1.0 },
+        modifier = { name = "modifier_stunned_lua", ability = self, duration = 0.5 },
         action = function(target)
             SKUtil.AbilityHit(hero, target)
         end

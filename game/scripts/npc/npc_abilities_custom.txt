@@ -40,6 +40,7 @@
 #base "abilities\legion_commander\lc_r.txt"
 #base "abilities\legion_commander\lc_a.txt"
 #base "abilities\lycan\lycan_q.txt"
+#base "abilities\lycan\lycan_q_sub.txt"
 #base "abilities\lycan\lycan_w.txt"
 #base "abilities\lycan\lycan_e.txt"
 #base "abilities\lycan\lycan_r.txt"

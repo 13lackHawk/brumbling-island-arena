@@ -38,11 +38,11 @@ function self:OnSpellStart()
                 modifier:IncrementStackCount()
                 modifier:ForceRefresh()
 
-                if modifier:GetStackCount() == 3 then
+                --[[if modifier:GetStackCount() == 3 then
                     damage = damage * 2
                     victim:EmitSound("Arena.Gyro.HitA2")
                     modifier:Destroy()
-                end
+                end]]--
             end
 
             victim:Damage(projectile, damage, true)

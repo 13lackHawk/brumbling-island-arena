@@ -22,4 +22,8 @@ end
 
 function modifier_storm_spirit_a_slow:GetEffectAttachType()
     return PATTACH_ABSORIGIN_FOLLOW
+<<<<<<< HEAD
 end
+=======
+end
+>>>>>>> 4658a595d96ca1e27655d64e132e3c02642443d4

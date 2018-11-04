@@ -10,7 +10,7 @@ function shaker_q:OnAbilityPhaseStart()
 end
 
 function shaker_q:OnSpellStart()
-    Wrappers.DirectionalAbility(self, 1200)
+    Wrappers.DirectionalAbility(self, 5000)
 
     local hero = self:GetCaster().hero
     local target = self:GetCursorPosition()
@@ -24,7 +24,9 @@ function shaker_q:OnSpellStart()
     hero:AddNewModifier(hero, self, "modifier_shaker_q_recast", { duration = 0.7 })
     hero:SwapAbilities("shaker_q", "shaker_q_sub")
 
-    CreateAOEMarker(hero, target, area, 1.1, Vector(204, 102, 0))
+    CreateAOEMarker(hero, target, area, 1.1, Vector(234, 72, 0))
+    CreateAOEMarker(hero, target, area, 1.1, Vector(234, 72, 0))
+    CreateAOEMarker(hero, target, area, 1.1, Vector(234, 72, 0))
 
     TimedEntity(0.8, function()
         local mod = hero:FindModifier("modifier_shaker_q")
@@ -119,7 +121,7 @@ function shaker_q:GetCastAnimation()
 end
 
 function shaker_q:GetPlaybackRateOverride()
-    return 2.5
+    return 2.75
 end
 
 if IsClient() then

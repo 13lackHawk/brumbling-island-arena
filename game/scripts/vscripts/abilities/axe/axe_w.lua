@@ -3,6 +3,7 @@ local self = axe_w
 
 LinkLuaModifier("modifier_axe_w", "abilities/axe/modifier_axe_w", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_axe_w_bonus", "abilities/axe/modifier_axe_w_bonus", LUA_MODIFIER_MOTION_NONE)
+LinkLuaModifier("modifier_axe_w_dmg", "abilities/axe/modifier_axe_w_dmg", LUA_MODIFIER_MOTION_NONE)
 
 function self:OnSpellStart()
     local hero = self:GetCaster().hero

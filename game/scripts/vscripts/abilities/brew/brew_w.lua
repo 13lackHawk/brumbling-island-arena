@@ -21,7 +21,9 @@ function brew_w:OnSpellStart()
         goesThroughTrees = true,
         hitFunction = function(projectile, target)
             local stacks = hero:FindAbility("brew_q"):CountBeer(target)
-
+            if heroStacks > 2 then
+                heroStacks = 2
+            end
             target:Damage(hero, heroStacks + 1)
 
             --if stacks > 0 then

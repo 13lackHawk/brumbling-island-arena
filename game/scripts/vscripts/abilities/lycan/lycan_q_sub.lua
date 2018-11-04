@@ -5,14 +5,12 @@ function lycan_q_sub:OnSpellStart()
     local target = self:GetCursorPosition() * Vector(1, 1, 0)
     local mod = hero:FindModifier("modifier_lycan_q_recast")
 
-    for _, ent in pairs(hero.round.spells:GetValidTargets()) do
-        if instanceof(ent, LycanWolf) and ent.owner.team == hero.owner.team then
-            ent:FearBark()
-            ent:EmitSound("Arena.Lycan.CastE")
-        end
-    end
-
     if mod then
+        for _, wolf in pairs(mod.wolfs) do
+            wolf:FearBark()
+            wolf:EmitSound("Arena.Lycan.CastE")
+        end
+
         mod:Destroy()
     end
 end

@@ -39,22 +39,20 @@ function drow_r:OnChannelFinish(interrupted)
         graphics = "particles/drow_r/drow_r.vpcf",
         hitSound = "Arena.Drow.HitR",
         damage = self:GetDamage(),
-        --knockback = { force = 100 },
-        nonBlockedHitAction = function(projectile, target)
+        hitFunction = function(projectile, target)
             local pos = projectile:GetPos()
+            target:Damage(projectile, self:GetDamage())
 
             if instanceof(target, Hero) then
                 local effect = ImmediateEffectPoint("particles/drow_r/drow_r_hit.vpcf", PATTACH_ABSORIGIN, target, pos)
                 ParticleManager:SetParticleControl(effect, 1, pos)
                 target:AddNewModifier(hero, hero:FindAbility("drow_r"), "modifier_drow_r", { duration = 2 })
             end
-
-            --effect = ImmediateEffectPoint("particles/drow_r/drow_r_bash.vpcf", PATTACH_ABSORIGIN, target, pos)
-            --ParticleManager:SetParticleControlForward(effect, 1, -direction)
-
-            if instanceof(target, Hero) then
+        end,
+        nonBlockedHitAction = function(projectile,target)
+            if instanceof(target,Hero) then
                 projectile:Destroy()
-            end
+            end 
         end,
         destroyFunction = function(projectile)
             ScreenShake(projectile:GetPos(), 5, 150, 0.25, 3000, 0, true)

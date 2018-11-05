@@ -1,6 +1,6 @@
 HealthSystem = HealthSystem or System("customHealth", "healthBarEnabled")
 
-function HealthSystem:Damage(source, amount, isPhysical)
+function HealthSystem:Damage(source, amount, isPhysical, params)
     if amount == nil then
         amount = 3
     end
@@ -11,7 +11,7 @@ function HealthSystem:Damage(source, amount, isPhysical)
         return
     end
 
-    if self:IsInvulnerable() and source ~= self then
+    if (self:IsInvulnerable() and (not params or not params.ignoreInvulnerable)) and source ~= self then
         return
     end
 
@@ -28,7 +28,10 @@ function HealthSystem:Damage(source, amount, isPhysical)
 
     for _, modifier in pairs(all) do
         if modifier.OnDamageReceived then
-            local result = modifier:OnDamageReceived(source, self, amount, isPhysical)
+            local result = amount
+            if not params or not (params.ignoreModifiers == "all" or params.ignoreModifiers[modifier:GetName()]) then
+                result = modifier:OnDamageReceived(source, self, amount, isPhysical)    
+            end
 
             if result == false then -- == false so nil works
                 return

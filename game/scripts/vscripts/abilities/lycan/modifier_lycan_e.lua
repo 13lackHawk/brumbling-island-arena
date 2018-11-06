@@ -1,6 +1,5 @@
 modifier_lycan_e = class({})
 self = modifier_lycan_e
-self.itsTimeToStop = 0
 
 if IsServer() then
     function modifier_lycan_e:OnCreated()
@@ -15,9 +14,6 @@ if IsServer() then
     end
 
     function modifier_lycan_e:OnIntervalThink()
-        if self.itsTimeToStop >= 3 then
-            self:Destroy()
-        end
         local unit = self:GetParent()
         local position = unit:GetAbsOrigin() + self.direction * 500
 
@@ -42,6 +38,10 @@ function modifier_lycan_e:DeclareFunctions()
     }
 
     return funcs
+end
+
+function modifier_lycan_e:Update()
+    self.damageReceived = 0
 end
 
 function modifier_lycan_e:GetEffectName()
@@ -70,6 +70,9 @@ function modifier_lycan_e:GetPriority()
 end
 
 function modifier_lycan_e:OnDamageReceived(source, hero, amount)
-    self.itsTimeToStop = self.itsTimeToStop + amount
+    self.damageReceived = self.damageReceived + amount
+    if self.damageReceived >= 3 then
+        self:Destroy()
+    end
     return amount
 end

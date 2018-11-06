@@ -21,9 +21,11 @@ function drow_w:OnSpellStart()
         hero:AreaEffect({
             ability = self,
             filter = Filters.Area(target, 250),
-            modifier = { name = "modifier_drow_w", duration = 1.5, ability = self },
-            onlyHeroes = true,
-            action = function() hitAndNotBlocked = true end
+            action = function(target)
+                hitAndNotBlocked = true
+                target:AddNewModifier(hero, self, "modifier_drow_w", { duration = 1.5 }):Update()
+            end,
+            onlyHeroes = true
         })
 
         if hitAndNotBlocked then

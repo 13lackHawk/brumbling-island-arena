@@ -9,19 +9,13 @@ function lycan_e:OnSpellStart()
         ability = self,
         filter = Filters.Area(hero:GetPos(), 350),
         onlyHeroes = true,
-        modifier = { name = "modifier_lycan_e", ability = self, duration = 2.0 },
         action = function(target)
+            target:AddNewModifier(hero, self, "modifier_lycan_e", { duration = 2.0 }):Update()
             if instanceof(target, Hero) then
                 target:AddKnockbackSource(hero, 2.0)
             end
         end
     })
-
-    --[[for _, ent in pairs(hero.round.spells:GetValidTargets()) do
-        if instanceof(ent, LycanWolf) and ent.owner.team == hero.owner.team then
-            ent:FearBark()
-        end
-    end]]--
 
     FX("particles/units/heroes/hero_lycan/lycan_howl_cast.vpcf", PATTACH_ABSORIGIN, hero, {
         cp0 = hero:GetPos(),

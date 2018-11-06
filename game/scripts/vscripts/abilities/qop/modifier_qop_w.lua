@@ -1,6 +1,5 @@
 modifier_qop_w = class({})
 self = modifier_qop_w
-self.itsTimeToStop = 0
 
 if IsServer() then
     function modifier_qop_w:OnCreated()
@@ -10,9 +9,6 @@ if IsServer() then
     end
 
     function modifier_qop_w:OnIntervalThink()
-        if self.itsTimeToStop >= 3 then
-            self:Destroy()
-        end
         self:GetParent():MoveToNPC(self:GetCaster())
     end
 
@@ -22,7 +18,10 @@ if IsServer() then
 end
 
 function modifier_qop_w:OnDamageReceived(source, hero, amount)
-    self.itsTimeToStop = self.itsTimeToStop + amount
+    self.damageReceived = (self.damageReceived or 0) + amount
+    if self.damageReceived >= 3 then
+        self:Destroy()
+    end
     return amount
 end
 
@@ -32,6 +31,10 @@ function modifier_qop_w:DeclareFunctions()
     }
 
     return funcs
+end
+
+function modifier_qop_w:Update()
+    self.damageReceived = 0
 end
 
 function modifier_qop_w:GetEffectName()

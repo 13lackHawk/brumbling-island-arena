@@ -18,7 +18,9 @@ function qop_w:OnSpellStart()
         ability = self,
         onlyHeroes = true,
         filter = Filters.Cone(hero:GetPos(), 700, direction, math.pi / 2) + faceFilter,
-        modifier = { name = "modifier_qop_w", duration = 1.5, ability = self }
+        action = function(target)
+            target:AddNewModifier(hero, self, "modifier_qop_w", { duration = 1.5 }):Update()
+        end
     })
 
     hero:EmitSound("Arena.QOP.CastW")

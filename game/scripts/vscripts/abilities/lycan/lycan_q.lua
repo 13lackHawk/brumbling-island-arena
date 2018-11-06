@@ -12,11 +12,11 @@ function lycan_q:OnSpellStart()
 
     local hero = self:GetCaster().hero
     local target = self:GetCursorPosition() * Vector(1, 1, 0)
-    hero:AddNewModifier(hero, hero:FindAbility("lycan_e"), "modifier_lycan_q_recast", { duration = 2.0 })
 
     LycanWolf(hero.round, hero, target, 1, self):Activate()
     LycanWolf(hero.round, hero, target, -1, self):Activate()
-    hero:SwapAbilities("lycan_q", "lycan_q_sub")
+
+    hero:AddNewModifier(hero, hero:FindAbility("lycan_q_sub"), "modifier_lycan_q_recast", { duration = -1 })
 
     hero:EmitSound("Arena.Lycan.CastQ")
     hero:EmitSound("Arena.Lycan.CastQ.Voice")

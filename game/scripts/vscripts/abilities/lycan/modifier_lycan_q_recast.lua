@@ -1,31 +1,37 @@
 modifier_lycan_q_recast = class({})
 local self = modifier_lycan_q_recast
-self.remove = false
 
 if IsServer() then
-    --[[function self:OnCreated()
+    function self:OnCreated()
+        self.wolfs = {}
+        local hero = self:GetParent():GetParentEntity()
+        hero:SwapAbilities("lycan_q", "lycan_q_sub")
+        for _, ent in pairs(hero.round.spells:GetValidTargets()) do
+            if instanceof(ent, LycanWolf) and ent.hero == hero and ent:Alive() and not ent.falling then
+                table.insert(self.wolfs, ent)
+            end
+        end
+
         self:StartIntervalThink(0)
     end
 
     function self:OnIntervalThink()
-    	local hero = self:GetParent():GetParentEntity()
-    	if self.remove == true then
-    		hero:SwapAbilities("lycan_q_sub", "lycan_q")
-    		self:Destroy()
-    	end
-    	for _, ent in pairs(hero.round.spells:GetValidTargets()) do
-        	if instanceof(ent, LycanWolf) and ent.owner.team == hero.owner.team then
-            	self.remove = false
-            --elseif instanceof(ent, LycanWolf) and not ent:Alive() then
-            --	self:Destroy()
-            --end
-        	end
-    	end
-    end--]]
+        for i=#self.wolfs,1,-1 do
+            local wolf = self.wolfs[i]
+
+            if (not wolf:Alive()) or wolf.falling then
+                table.remove(self.wolfs, i)
+            end
+        end
+
+        if #self.wolfs == 0 then
+            self:Destroy()
+        end
+    end
     
     function self:OnDestroy()
-    	local hero = self:GetParent():GetParentEntity()
-    	hero:SwapAbilities("lycan_q_sub", "lycan_q")
+        local hero = self:GetParent():GetParentEntity()
+        hero:SwapAbilities("lycan_q_sub", "lycan_q")
     end
 end
 

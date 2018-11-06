@@ -119,8 +119,8 @@ function DynamicEntity:TestFalling()
 end
 
 
-function DynamicEntity:Damage(source, amount, isPhysical)
-    Spells.SystemCallSingle(self, "Damage", source, amount, isPhysical)
+function DynamicEntity:Damage(source, amount, isPhysical, params)
+    Spells.SystemCallSingle(self, "Damage", source, amount, isPhysical, params)
 end
 
 function DynamicEntity:Heal() end

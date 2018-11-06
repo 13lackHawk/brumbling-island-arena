@@ -17,9 +17,9 @@ function self:GetStatusEffectName()
     return "particles/status_fx/status_effect_battle_hunger.vpcf"
 end
 
-function self:OnDamageReceived(source, hero, amount)
+function self:OnDamageReceived(source, hero, amount, type)
     local caster = self:GetCaster():GetParentEntity()
-    caster:AddNewModifier(caster, caster:FindAbility("axe_w"), "modifier_axe_w_dmg", { duration = 2.5 }):GetDmg(amount)
+    caster:AddNewModifier(caster, caster:FindAbility("axe_w"), "modifier_axe_w_dmg", { duration = 2.5 }):GetDmg(source, amount, type)
     self.damageReceived = amount
     self:Destroy()
     return false

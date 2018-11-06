@@ -72,7 +72,7 @@ function ProjectileTimberQ:Update()
         if GameRules:GetGameTime() >= self.nextDamageAt and self.distance <= self.distancePassed then
             if self.ticksPassed == 3 and not self.goingBack then
                 self.hero:SwapAbilities("timber_q_sub", "timber_q")
-                self.hero:FindAbility("timber_q"):StartCooldown(5.5)
+                self.hero:FindAbility("timber_q"):StartCooldown(self.hero:FindAbility("timber_q"):GetCooldown(1))
                 self:Retract()
             else
                 self:AreaEffect({
@@ -110,7 +110,7 @@ end
 function ProjectileTimberQ:Deflect(by, direction)
     if not self.goingBack then
         self.hero:SwapAbilities("timber_q_sub", "timber_q")
-        self.hero:FindAbility("timber_q"):StartCooldown(5.5)
+        self.hero:FindAbility("timber_q"):StartCooldown(self.hero:FindAbility("timber_q"):GetCooldown(1))
         direction.z = 0
         self.direction = direction:Normalized()
         self.owner = by.owner

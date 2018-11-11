@@ -49,9 +49,24 @@ function EntityTinkerE:LinkTo(target)
 end
 
 function EntityTinkerE:CollideWith(target)
-    if self.link and self.link:Alive() and not self.arrived[target] then
-        if target:AllowAbilityEffect(self, self.ability) == false then
-            return
+
+end
+
+function EntityTinkerE:AddArrived(target)
+    self.arrived[target] = true
+end
+
+function EntityTinkerE:Arrived(target)
+    return self.arrived[target]
+end
+
+function EntityTinkerE:Update()
+    getbase(EntityTinkerE).Update(self)
+
+    local targets = {}
+    local function teleport(target)
+        if target:AllowAbilityEffect(self, self.ability) == false or self.arrived[target] then
+            return false
         end
 
         local old = target:GetPos()
@@ -78,19 +93,38 @@ function EntityTinkerE:CollideWith(target)
         ParticleManager:ReleaseParticleIndex(index)
 
         target.round.spells:InterruptDashes(target)
+
+        if instanceof(target, Hero) then
+            self:Destroy()
+            self.link:Destroy()
+            return true
+        end
     end
-end
 
-function EntityTinkerE:AddArrived(target)
-    self.arrived[target] = true
-end
+    if self.link and self.link:Alive() then
+        for _,target in pairs(self.hero.round.spells:GetValidTargets()) do
+            if (target:GetPos() - self:GetPos()):Length2D() <= self.size + target:GetRad() and target:CollidesWith(self) then
+                table.insert(targets, target)
+            end
+        end
 
-function EntityTinkerE:Arrived(target)
-    return self.arrived[target]
-end
+        table.sort(targets, function(a, b)
+            local function GetPriority(t)
+                if instanceof(t, Hero) then
+                    if t == self.hero then return 4 end
+                    if t.owner.team ~= self.hero.owner.team then return 3 else return 2 end
+                else return 1 end
+            end
 
-function EntityTinkerE:Update()
-    getbase(EntityTinkerE).Update(self)
+            return GetPriority(a) < GetPriority(b)
+        end)
+
+        for _,target in pairs(targets) do 
+            if teleport(target) then
+                break
+            end
+        end
+    end
 
     if not self.hero:Alive() then
         self:Destroy()

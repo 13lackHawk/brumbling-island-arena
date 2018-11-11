@@ -44,6 +44,7 @@ function storm_spirit_a:OnSpellStart()
                 ability = self,
                 filter = Filters.Area(projectile:GetPos(), 350),
                 modifier = { name = "modifier_storm_spirit_a_slow", duration = 0.7, ability = self },
+                damagesTrees = true,
                 isPhysical = true,
                 action = function(target)
                     if target == projectile.hitSomething then

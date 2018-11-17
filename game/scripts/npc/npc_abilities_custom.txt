@@ -186,7 +186,6 @@
 #base "abilities\shredder\timber_w.txt"
 #base "abilities\shredder\timber_e.txt"
 #base "abilities\shredder\timber_r.txt"
-#base "abilities\shredder\timber_r_sub.txt"
 
 "DOTAAbilities" {
 	"dummy_unit_ability" {

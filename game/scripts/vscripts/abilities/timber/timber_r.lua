@@ -26,14 +26,9 @@ function timber_r:OnSpellStart()
         end
     }):Activate()
 
-    hero:SwapAbilities("timber_r", "timber_r_sub")
-    hero:FindAbility("timber_r"):StartCooldown(hero:FindAbility("timber_r"):GetCooldown(1))
-
     CreateEntityAOEMarker(target, 400, (target - hero:GetPos()):Length2D() / 2400 + 0.1, { 255, 106, 0 }, 0.3, true)
 
-
     hero:EmitSound("Arena.Timber.CastR")
-
 end
 
 function timber_r:GetCastAnimation()

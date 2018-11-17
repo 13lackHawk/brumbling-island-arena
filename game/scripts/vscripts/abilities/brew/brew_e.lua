@@ -3,7 +3,7 @@ brew_e = class({})
 function brew_e:OnSpellStart()
     local hero = self:GetCaster():GetParentEntity()
 
-    hero:Heal(hero:FindAbility("brew_q"):CountBeer(hero))
+    hero:Heal(hero:CountBeer(hero))
     hero:GetUnit():Purge(false, true, false, false, false)
 
     FX("particles/items3_fx/mango_active.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero, { release = true })

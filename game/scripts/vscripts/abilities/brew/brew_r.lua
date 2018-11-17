@@ -15,7 +15,7 @@ end
 function brew_r:OnSpellStart()
     Wrappers.DirectionalAbility(self, 700)
 
-    local hero = self:GetCaster().hero
+    local hero = self:GetCaster():GetParentEntity()
     local target = self:GetCursorPosition()
 
     ArcProjectile(self.round, {
@@ -34,10 +34,8 @@ function brew_r:OnSpellStart()
             hitAllies = true,
             damagesTrees = true,
             action = function(victim)
-                local q = hero:FindAbility("brew_q")
-
-                q:AddBeerModifier(victim)
-                q:AddBeerModifier(victim)
+                hero:AddBeerModifier(victim, "spells", 9.5)
+                hero:AddBeerModifier(victim, "spells", 9.5)
 
                -- Knockback(victim, self, victim:GetPos() - target, 350, 1500, DashParabola(80))
 

@@ -4,30 +4,6 @@ LinkLuaModifier("modifier_brew_beer", "abilities/brew/modifier_brew_beer", LUA_M
 LinkLuaModifier("modifier_brew_q", "abilities/brew/modifier_brew_q", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_tinker_q", "abilities/tinker/modifier_tinker_q", LUA_MODIFIER_MOTION_NONE)
 
-function brew_q:AddBeerModifier(target)
-    if self:CountBeer(target) < 8 then
-        target:AddNewModifier(self:GetCaster().hero, self, "modifier_brew_beer", {}) -- { duration = 9.5 }
-    end
-end
-
-function brew_q:CountBeer(target)
-    return #target:GetUnit():FindAllModifiersByName("modifier_brew_beer")
-end
-
-function brew_q:ClearBeer(target, optionalAmount)
-    for _, modifier in pairs(target:GetUnit():FindAllModifiersByName("modifier_brew_beer")) do
-        modifier:Destroy()
-
-        if optionalAmount ~= nil then
-            optionalAmount = optionalAmount - 1
-
-            if optionalAmount == 0 then
-                break
-            end
-        end
-    end
-end
-
 function brew_q:OnSpellStart()
     local hero = self:GetCaster().hero
     local pos = hero:GetPos()

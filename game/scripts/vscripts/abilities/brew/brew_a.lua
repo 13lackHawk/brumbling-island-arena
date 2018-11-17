@@ -4,7 +4,7 @@ LinkLuaModifier("modifier_brew_add_beer", "abilities/brew/modifier_brew_add_beer
 
 function brew_a:OnAbilityPhaseStart()
     local hero = self:GetCaster():GetParentEntity()
-    local stacks = hero:FindAbility("brew_q"):CountBeer(hero)
+    local stacks = hero:CountBeer(hero)
 
     hero:EmitSound(stacks >= 3 and "Arena.Brew.CastA2" or "Arena.Brew.CastA")
 
@@ -20,7 +20,7 @@ function brew_a:OnSpellStart()
     local range = 300
     local damage = self:GetDamage()
     local force = 20
-    local stacks = hero:FindAbility("brew_q"):CountBeer(hero)
+    local stacks = hero:CountBeer(hero)
 
     if stacks >= 3 then
         damage = damage * 2
@@ -39,7 +39,7 @@ end
 
 function brew_a:GetCastAnimation()
     local hero = self:GetCaster():GetParentEntity()
-    local stacks = hero:FindAbility("brew_q"):CountBeer(hero)
+    local stacks = hero:CountBeer(hero)
 
     if stacks >= 3 then
         return ACT_DOTA_ATTACK_EVENT

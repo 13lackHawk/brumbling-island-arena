@@ -1,7 +1,7 @@
 ProjectileTimberE = ProjectileTimberE or class({}, nil, Projectile)
 
 function ProjectileTimberE:constructor(round, hero, target, ability)
-	getbase(ProjectileTimberE).constructor(self, round, {
+    getbase(ProjectileTimberE).constructor(self, round, {
         ability = ability,
         owner = hero,
         from = hero:GetPos() + Vector(0, 0, 64),
@@ -64,8 +64,7 @@ function ProjectileTimberE:CollideWith(target)
 
     if not ally and not instanceof(target, Obstacle) then
         target:Damage(self, self.ability:GetDamage())
-        local distanceRoot = (target:GetPos() - self.hero:GetPos()):Length2D()
-        local theFurtherTheBetter = 0.1 * (distanceRoot / 48.3) -- 1450/48.3 = 30 -> 30*0.1 = 3.0 - max root duration
+        local theFurtherTheBetter = 0.1 * (self.distancePassed / 48.3) -- 1450/48.3 = 30 -> 30*0.1 = 3.0 - max root duration
         if theFurtherTheBetter < 0.5 then
             theFurtherTheBetter = 0.5 -- min root duration
         end

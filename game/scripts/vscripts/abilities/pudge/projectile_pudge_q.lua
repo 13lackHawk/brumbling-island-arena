@@ -1,7 +1,7 @@
 ProjectilePudgeQ = ProjectilePudgeQ or class({}, nil, Projectile)
 
 function ProjectilePudgeQ:constructor(round, hero, target, ability)
-	getbase(ProjectilePudgeQ).constructor(self, round, {
+    getbase(ProjectilePudgeQ).constructor(self, round, {
         ability = ability,
         owner = hero,
         from = hero:GetPos() + Vector(0, 0, 64),
@@ -137,7 +137,7 @@ function ProjectilePudgeQ:GetNextPosition(pos)
     if not self.goingBack then
         return getbase(ProjectilePudgeQ).GetNextPosition(self, pos)
     else
-        return pos + ((self.hero:GetPos() - pos):Normalized() * (self:GetSpeed() / 30))
+        return pos + ((self.hero:GetPos() + Vector(0,0,64) - pos):Normalized() * (self:GetSpeed() / 30))
     end
 end
 

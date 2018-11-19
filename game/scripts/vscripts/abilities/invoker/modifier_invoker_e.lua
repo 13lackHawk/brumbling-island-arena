@@ -31,7 +31,7 @@ if IsServer() then
                     local ability = target:GetUnit():GetAbilityByIndex(i)
 
                     if ability and (ability:IsInAbilityPhase() or ability:IsChanneling()) then
-                        self:OnAbilityStart({ unit = target:GetUnit(), ability = ability })
+                        self:OnAbilityPhaseStart(ability)
                         break
                     end
                 end
@@ -40,24 +40,28 @@ if IsServer() then
     end
 
     function modifier_invoker_e:OnAbilityImmediate(event)
-        self:OnAbilityStart(event)
+        self:OnAbilityPhaseStart(event.ability)
     end
 
-    function modifier_invoker_e:OnAbilityStart(event)
-        local hero = event.unit.hero
+    function modifier_invoker_e:OnAbilityPhaseStart(ability)
+        local target = ability:GetCaster():GetParentEntity()
+        local parent = self:GetParent()
+        local caster = self:GetAbility():GetCaster():GetParentEntity()
 
-        if not event.ability.canBeSilenced or self:GetElapsedTime() < 0.35 then
-            return
+        if not ability.canBeSilenced or self:GetElapsedTime() < 0.35 then
+            return 
         end
 
-        local close = (hero:GetPos() - self:GetParent():GetAbsOrigin()):Length2D() <= 400
+        local close = (target:GetPos() - parent:GetAbsOrigin()):Length2D() <= 400
 
-        if hero and hero:FindModifier("modifier_invoker_e_target", self:GetCaster()) and close then
+        if target:FindModifier("modifier_invoker_e_target", self:GetCaster()) and close then
             if not self.destroyed then
                 self:GoBang()
             end
 
             self:Destroy()
+
+            return false
         end
     end
 

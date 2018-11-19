@@ -9,33 +9,35 @@ if IsServer() then
             local ability = unit:GetAbilityByIndex(i)
 
             if ability and (ability:IsInAbilityPhase() or ability:IsChanneling()) then
-                self:OnAbilityStart({ unit = unit, ability = ability })
+                self:OnAbilityPhaseStart(ability)
                 break
             end
         end
     end
-    
-    function modifier_void_w:OnAbilityImmediate(event)
-        self:OnAbilityStart(event)
+end
+
+function modifier_void_w:OnAbilityPhaseStart(ability)
+    local target = ability:GetCaster():GetParentEntity()
+    local parent = self:GetParent():GetParentEntity()
+    local caster = self:GetAbility():GetCaster():GetParentEntity()
+
+    if not ability.canBeSilenced then
+        return 
     end
 
-    function modifier_void_w:OnAbilityStart(event)
-        local target = event.unit:GetParentEntity()
-        local shouldBeAffectedByAbility = target:FindModifier("modifier_void_w")
-        local caster = self:GetCaster():GetParentEntity()
+    if target == parent then
+        target:AddNewModifier(target, self:GetAbility(), "modifier_silence_lua", { duration = 2.0 })
+        target:Damage(caster, 2)
+        target:EmitSound("Arena.Void.ProcW")
 
-        if not event.ability.canBeSilenced then
-            return
-        end
+        self:Destroy()
 
-        if shouldBeAffectedByAbility then
-            target:AddNewModifier(target, self:GetAbility(), "modifier_silence_lua", { duration = 2.0 })
-            target:Damage(caster, 2)
-            target:EmitSound("Arena.Void.ProcW")
-
-            self:Destroy()
-        end
+        return false
     end
+end
+
+function modifier_void_w:OnAbilityImmediate(event)
+    return self:OnAbilityPhaseStart(event.ability)
 end
 
 function modifier_void_w:DeclareFunctions()

@@ -1,28 +1,35 @@
 modifier_brew_q = class({})
 
 if IsServer() then
+    function modifier_brew_q:OnCreated()
+        local unit = self:GetParent()
 
-    function modifier_brew_q:OnAbilityImmediate(event)
-        self:OnAbilityStart(event)
+        local count = unit:GetAbilityCount() - 1
+        for i=0,count do
+            local ability = unit:GetAbilityByIndex(i)
+
+            if ability and IsAttackAbility(ability) and (ability:IsInAbilityPhase() or ability:IsChanneling()) then
+                self:OnAbilityPhaseStart(ability)
+                break
+            end
+        end
     end
 
-    function modifier_brew_q:OnAbilityStart(event)
-        local hero = event.unit.hero
-        local hero_void = self:GetCaster().hero
-        local epic_test = hero == hero_void
-        local TrueHero = hero:FindModifier("modifier_brew_q")
+    function modifier_brew_q:OnAbilityImmediate(event)
+        self:OnAbilityPhaseStart(event.ability)
+    end
 
-        --[[if not event.ability.canBeSilenced then
-            return
-        end]]--
+    function modifier_brew_q:OnAbilityPhaseStart(ability)
+        local target = ability:GetCaster():GetParentEntity()
+        local parent = self:GetParent():GetParentEntity()
+        local caster = self:GetAbility():GetCaster():GetParentEntity()
 
-        if hero and TrueHero and not epic_test and IsAttackAbility(event.ability) then
-            if not self.destroyed then
-                hero:AddNewModifier(hero, self:GetAbility(), "modifier_tinker_q", { duration = 2.0 })
-                hero:EmitSound("Arena.Void.ProcW")
-            end
+        if target == parent and IsAttackAbility(ability) then
+            parent:AddNewModifier(caster, self:GetAbility(), "modifier_tinker_q", { duration = 2.0 })
+            caster:EmitSound("Arena.Void.ProcW")
             self:Destroy()
-            self.destroyed = true
+
+            return false
         end
     end
 end

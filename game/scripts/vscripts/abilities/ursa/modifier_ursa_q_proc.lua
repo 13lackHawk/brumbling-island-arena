@@ -9,39 +9,37 @@ if IsServer() then
             local ability = unit:GetAbilityByIndex(i)
 
             if ability and (ability:IsInAbilityPhase() or ability:IsChanneling()) then
-                self:OnAbilityStart({ unit = unit, ability = ability })
+                self:OnAbilityPhaseStart(ability)
                 break
             end
         end
     end
     
     function modifier_ursa_q_proc:OnAbilityImmediate(event)
-        self:OnAbilityStart(event)
+        self:OnAbilityPhaseStart(event.ability)
     end
 
-    function modifier_ursa_q_proc:OnAbilityStart(event)
-        local hero = event.unit.hero
-        local hero_ursa = self:GetCaster().hero
-        local epic_test = hero == hero_ursa
-        local TrueHero = hero:FindModifier("modifier_ursa_q_proc")
+    function modifier_ursa_q_proc:OnAbilityPhaseStart(ability)
+        local target = ability:GetCaster():GetParentEntity()
+        local parent = self:GetParent():GetParentEntity()
+        local caster = self:GetAbility():GetCaster():GetParentEntity()
 
-        if not event.ability.canBeSilenced then
-            return
+        if not ability.canBeSilenced then
+            return 
         end
 
-        if hero and TrueHero and not epic_test then
-            if not self.destroyed then
-                hero:AddNewModifier(hero, self:GetAbility(), "modifier_silence_lua", { duration = 2.0 })
-                hero:Damage(hero_ursa, 2)
-                hero_ursa:EmitSound("Arena.Ursa.ProcQ")
-                FX("particles/ursa_q/ursa_q_endcap.vpcf", PATTACH_ABSORIGIN, hero, {
-                   cp0 = { ent = self:GetParent(), point = "attach_hitloc" },
-                   cp3 = { ent = self:GetParent(), point = "attach_hitloc" },
-                   release = true
-                })
-            end
+        if target == parent then
+            parent:AddNewModifier(caster, self:GetAbility(), "modifier_silence_lua", { duration = 2.0 })
+            parent:Damage(caster, 2)
+            caster:EmitSound("Arena.Ursa.ProcQ")
+            FX("particles/ursa_q/ursa_q_endcap.vpcf", PATTACH_ABSORIGIN, parent, {
+               cp0 = { ent = self:GetParent(), point = "attach_hitloc" },
+               cp3 = { ent = self:GetParent(), point = "attach_hitloc" },
+               release = true
+            })
             self:Destroy()
-            self.destroyed = true
+
+            return false
         end
     end
 end

@@ -159,18 +159,36 @@ function Wrappers.AttackAbility(ability, staticDurationOffset, fx)
     end
 
     if IsServer() then
-        if fx then
-            local onPhaseStart = ability.OnAbilityPhaseStart
+        local onPhaseStart = ability.OnAbilityPhaseStart
 
-            function ability:OnAbilityPhaseStart()
-                FX(fx, PATTACH_ABSORIGIN, self:GetCaster():GetParentEntity(), { release = true })
+        function ability:OnAbilityPhaseStart()
+            local phase
 
-                if onPhaseStart then
-                    return onPhaseStart(self)
+            for _,ent in pairs(Entities:FindAllInSphere(Vector(0,0,0), math.huge)) do
+                if ent.FindAllModifiers then
+                    for _,mod in pairs(ent:FindAllModifiers()) do
+                        if mod.OnAbilityPhaseStart then
+                            if mod:OnAbilityPhaseStart(self) == false then
+                                phase = false
+                            end
+                        end
+                    end
                 end
-
-                return true
             end
+
+            if phase == false then
+                return phase
+            end
+
+            if fx then
+                FX(fx, PATTACH_ABSORIGIN, self:GetCaster():GetParentEntity(), { release = true })
+            end
+
+            if onPhaseStart then
+                return onPhaseStart(self)
+            end
+
+            return true
         end
 
         function ability:OnSpellStart()
@@ -199,7 +217,7 @@ end
 
 function IsAbilitySilenced(ability)
     if ability.silenceProtection then
-    	local hero = ability:GetCaster()
+        local hero = ability:GetCaster()
         local silenceModifiers = {
             ["modifier_silence_lua"] = 1,
             ["modifier_am_r"] = 1,
@@ -208,7 +226,7 @@ function IsAbilitySilenced(ability)
             ["modifier_ogre_6"] = 1,
             ["modifier_falling"] = 2,
             ["modifier_jugger_q"] = 1,
-            ["modifier_tusk_r_target"] = 2
+            ["modifier_knockup"] = 2
         }
 
         for mod, silencelevel in pairs(silenceModifiers) do
@@ -242,6 +260,34 @@ function Wrappers.NormalAbility(ability, silenceProtection)
 
     ability.silenceProtection = silenceProtection or 1
     ability.canBeSilenced = ability.silenceProtection <= 1
+
+    local onPhaseStart = ability.OnAbilityPhaseStart
+
+    function ability:OnAbilityPhaseStart()
+        local phase
+
+        for _,ent in pairs(Entities:FindAllInSphere(Vector(0,0,0), math.huge)) do
+            if ent.FindAllModifiers then
+                for _,mod in pairs(ent:FindAllModifiers()) do
+                    if mod.OnAbilityPhaseStart then
+                        if mod:OnAbilityPhaseStart(self) == false then
+                            phase = false
+                        end
+                    end
+                end
+            end
+        end
+
+        if phase == false then
+            return phase
+        end
+
+        if onPhaseStart then
+            return onPhaseStart(self)
+        end
+
+        return true
+    end
 
     function ability:GetBehavior()
         if IsAbilitySilenced(self) then

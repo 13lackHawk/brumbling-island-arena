@@ -2,9 +2,6 @@ tusk_r = class({})
 
 LinkLuaModifier("modifier_tusk_r", "abilities/tusk/modifier_tusk_r", LUA_MODIFIER_MOTION_NONE)
 LinkLuaModifier("modifier_tusk_r_sub", "abilities/tusk/modifier_tusk_r_sub", LUA_MODIFIER_MOTION_NONE)
-LinkLuaModifier("modifier_tusk_r_target", "abilities/tusk/modifier_tusk_r_target", LUA_MODIFIER_MOTION_NONE)
-
-require("abilities/tusk/tusk_r_knockback")
 
 function tusk_r:OnAbilityPhaseStart()
     AddAnimationTranslate(self:GetCaster():GetParentEntity():GetUnit(), "punch", 0)
@@ -47,14 +44,16 @@ function tusk_r:OnChannelFinish(interrupted)
             target:Damage(hero, self:GetDamage())
             if instanceof(target, Hero) then
                 hero:Animate(ACT_DOTA_CAST_ABILITY_4, 2)
+                dash:Interrupt()
 
                 FX("particles/units/heroes/hero_tusk/tusk_walruspunch_start.vpcf", PATTACH_ABSORIGIN_FOLLOW, target, { release = true })
                 target:EmitSound("Arena.Tusk.HitR.Hero")
 
-                hero.round.spells:InterruptDashes(target)
-                local knockback = TuskRKnockback(target, self, direction, 0, 325, 55, true)
-                hero:AddNewModifier(hero, self, "modifier_tusk_r_sub", { duration = knockback:GetDashTime() - 0.15 }).target = target
-                dash:Interrupt()
+                local knockup = Knockup(target, hero, direction, 325, 55, {
+                    gesture = ACT_DOTA_FLAIL
+                })
+
+                hero:AddNewModifier(hero, self, "modifier_tusk_r_sub", { duration = knockup:GetRemainingDashTime() }).knockup = knockup
             else
                 SoftKnockback(target, self, knockDirection(target,dash), 60, {
                     decrease = 3

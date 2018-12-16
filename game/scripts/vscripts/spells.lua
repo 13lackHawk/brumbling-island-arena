@@ -74,13 +74,29 @@ function Spells:Update()
         Spells.WrapException(
             function(dash, i)
                 if not dash.destroyed then
-                    dash:Update()
+                    if not instanceof(dash, Knockup) then dash:Update() end
                 else
                     table.remove(self.dashes, i)
                 end
             end
         , dash, i)
     end
+
+    for i = #self.dashes, 1, -1 do
+        local dash = self.dashes[i]
+
+        Spells.WrapException(
+            function(dash, i)
+                if not dash.destroyed then
+                    if instanceof(dash, Knockup) then dash:Update() end
+                else
+                    table.remove(self.dashes, i)
+                end
+            end
+        , dash, i)
+    end
+
+    
 
     for _, entity in ipairs(self.entities) do
         Spells.WrapException(
@@ -119,7 +135,10 @@ function Spells:Update()
         end
     end
 
-    -- Resolving falling entities
+    self:ResolveFallingEntities()
+end
+
+function Spells:ResolveFallingEntities()
     for _, entity in ipairs(self.entities) do
         if entity:CanFall() and not entity.falling then
             Spells.WrapException(
@@ -128,11 +147,18 @@ function Spells:Update()
                     local hit = entity:TestFalling()
 
                     if not hit then
-                        local softKb = self:FindSoftKnockback(entity)
-                        local horVel
+                        local point = Vector(0,0,0)
 
-                        if softKb then
-                            horVel = softKb.direction * softKb.force
+                        for _, dash in ipairs(self.dashes) do
+                            if dash.hero == entity then
+                                if instanceof(dash, SoftKnockback) then
+                                    point = point + dash.direction * dash.force
+                                end
+
+                                if instanceof(dash, Knockup) then
+                                    point = point + dash.speed * dash.direction + Vector(0, 0, -dash.knockup)
+                                end
+                            end
                         end
 
                         local pudgeQDash = self:FindPudgeQDash(entity)
@@ -140,10 +166,10 @@ function Spells:Update()
                         if pudgeQDash and not pudgeQDash:HasEnded() then
                             local direction = (pudgeQDash.pudge:GetPos() - entity:GetPos()):Normalized()
 
-                            horVel = direction * pudgeQDash.velocity
+                            point = direction * pudgeQDash.velocity
                         end
 
-                        entity:MakeFall(horVel)
+                        entity:MakeFall(Vector(point.x, point.y), point.z)
                     end
 
                     -- Doing damage to the pieces entity is standing on

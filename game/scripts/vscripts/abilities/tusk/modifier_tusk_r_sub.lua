@@ -7,9 +7,12 @@ if IsServer() then
 	end
 
 	function modifier_tusk_r_sub:OnIntervalThink()
-		if not self.target:FindModifier("modifier_tusk_r_target") then
-			self:Destroy()
+		for _,dash in pairs(GameRules.GameMode.round.spells.dashes) do	
+			if dash == self.knockup then
+				return
+			end
 		end
+		self:Destroy()
 	end
 
 	function modifier_tusk_r_sub:OnDestroy()

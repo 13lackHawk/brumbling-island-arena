@@ -34,9 +34,12 @@ function DynamicEntity:AddComponent(component)
     return self
 end
 
-function DynamicEntity:MakeFall(horizontalVelocity)
+function DynamicEntity:MakeFall(horizontalVelocity, fallingSpeed)
     self.falling = true
     self.fallingHorizontalVelocity = horizontalVelocity or Vector()
+    if fallingSpeed then
+        self.fallingSpeed = fallingSpeed * 3 - 10
+    end
 end
 
 function DynamicEntity:CanFall()
@@ -78,6 +81,16 @@ function DynamicEntity:SetInvulnerable(value)
 end
 
 function DynamicEntity:IsInvulnerable(value)
+    for _, modifier in pairs(self:AllModifiers()) do
+        if modifier.IsInvulnerable then
+            local result = modifier:IsInvulnerable(self)
+
+            if result == true then
+                return true
+            end
+        end
+    end
+
     return self.invulnerable
 end
 
@@ -218,7 +231,7 @@ function DynamicEntity:AreaEffect(params)
             end
 
             if params.knockback and (not blocked or not params.ability) and not isTree then
-                local direction = params.knockback.direction and params.knockback.direction(target) or (target:GetPos() - self:GetPos())
+                local direction = params.knockback.direction and params.knockback.direction(target) or (target:GetPos() - self:GetPos()) * Vector(1,1,0)
 
                 local force = params.knockback.force
                 local decrease = params.knockback.decrease

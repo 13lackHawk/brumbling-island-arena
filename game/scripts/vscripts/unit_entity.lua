@@ -24,6 +24,20 @@ function UnitEntity:constructor(round, unitName, pos, team, findSpace, playerOwn
 	end
 end
 
+function UnitEntity:CanFall()
+    return not self:IsAirborne()
+end
+
+function UnitEntity:IsAirborne()
+    for _, modifier in pairs(self:AllModifiers()) do
+        if modifier.Airborne and modifier:Airborne() then
+            return true
+        end
+    end
+
+    return false
+end
+
 function UnitEntity:SetHidden(hidden)
     Spells.SystemCallSingle(self, "SetHidden", hidden)
 
@@ -38,8 +52,8 @@ function UnitEntity:GetName()
     return self.unit:GetName()
 end
 
-function UnitEntity:MakeFall(horVel)
-    getbase(UnitEntity).MakeFall(self, horVel)
+function UnitEntity:MakeFall(horVel, fallingSpeed)
+    getbase(UnitEntity).MakeFall(self, horVel, fallingSpeed)
 
     self:AddNewModifier(self, nil, "modifier_falling", {})
 end

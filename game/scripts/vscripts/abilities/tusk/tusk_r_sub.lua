@@ -1,25 +1,25 @@
 tusk_r_sub = class({})
 
-LinkLuaModifier("modifier_tusk_r_target", "abilities/tusk/modifier_tusk_r_target", LUA_MODIFIER_MOTION_NONE)
-
-require("abilities/tusk/tusk_r_knockback")
-
 function tusk_r_sub:OnSpellStart()
 	local hero = self:GetCaster():GetParentEntity()
-	local target = hero:FindModifier("modifier_tusk_r_sub").target
+	local knockup = hero:FindModifier("modifier_tusk_r_sub").knockup
+	local target = knockup.hero
 	local direction = ((target:GetPos() - hero:GetPos()) * Vector(1,1,0)):Normalized()
-	local targetPos = target:GetPos()
 
-	hero:SetPos(targetPos + 100 * -direction)
+	hero:SetPos(target:GetPos() + 100 * -direction)
 	hero:SetFacing(direction)
 
-	hero.round.spells:InterruptDashes(target)
 	target:Damage(hero, self:GetDamage())
 	FX("particles/units/heroes/hero_tusk/tusk_walruspunch_start.vpcf", PATTACH_ABSORIGIN_FOLLOW, target, { release = true })
 	target:EmitSound("Arena.Tusk.HitR.Hero")
 
-	TuskRKnockback(target, self, direction, targetPos.z, 1000, 0)
-	TuskRKnockback(hero, self, -direction, targetPos.z, 650, 0)
+	Knockup(hero, hero, -direction, 650, -1, {
+        gesture = ACT_DOTA_FLAIL
+    })
+
+    Knockup(target, hero, direction, 1000, 0, {
+        gesture = ACT_DOTA_FLAIL
+    })
 
 	hero:Animate(ACT_DOTA_CAST_ABILITY_5, 1.85)
 

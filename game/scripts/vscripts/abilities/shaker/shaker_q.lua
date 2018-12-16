@@ -30,34 +30,19 @@ function shaker_q:OnSpellStart()
 
     TimedEntity(0.8, function()
         local mod = hero:FindModifier("modifier_shaker_q")
-        direction = (target - hero:GetPos()):Normalized()
-        local newDirection
-        if mod then
-            --local direction = (target - hero:GetPos()):Normalized()
-        else
-            newDirection = (hero:FindAbility("shaker_q_sub"):GetRecast())
+        direction = (hero:GetPos() - target):Normalized()
+        if not mod then
+            direction = -(hero:FindAbility("shaker_q_sub"):GetRecast())
         end
         hero:StopSound("Arena.SK.CastQ")
         hero:EmitSound("Arena.SK.EndQ", target)
         hero:AreaEffect({
             ability = self,
             filter = Filters.Area(target, area),
-            filterProjectiles = true,
             damage = self:GetDamage(),
+            filterProjectiles = true,
             action = function(victim)
                 effects = false
-                victim:SetFacing(direction)
-                local targetFly
-                if mod then
-                    targetFly = victim:GetPos() + direction * -500
-                else
-                    targetFly = victim:GetPos() + newDirection * -500
-                end
-
-                local isStunned = victim:FindModifier("modifier_stunned_lua")
-                if isStunned then
-                    isStunned:Destroy()
-                end
 
                 local index = ImmediateEffectPoint("particles/units/heroes/hero_sandking/sandking_epicenter.vpcf", PATTACH_ABSORIGIN, hero, victim:GetPos())
                 ParticleManager:SetParticleControl(index, 1, Vector(area, area, area))
@@ -68,30 +53,11 @@ function shaker_q:OnSpellStart()
                 index = ImmediateEffectPoint("particles/shaker_q/shaker_q.vpcf", PATTACH_ABSORIGIN, hero, victim:GetPos() + Vector(0,-30,0))
                 ParticleManager:SetParticleControl(index, 1, Vector(area, area, area))
 
-                FunctionDash(victim, targetFly, 0.45, {
-                forceFacing = true,
-                heightFunction = function(dash, current)
-                    local d = (dash.from - dash.to):Length2D()
-                    local x = (dash.from - current):Length2D()
-                    return ParabolaZ(200, d, x)
-                end,
-                arrivalFunction = function(dash)
-                    --[[hero:AreaEffect({
-                        ability = self,
-                        filter = Filters.Area(target, 256),
-                        modifier = { name = "modifier_stunned_lua", duration = 0.4, ability = self },
-                    })
-
-                    hero:EmitSound("Arena.Shaker.HitE")]]--]]--
-
-                    local effect = ImmediateEffect("particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_aftershock_egset.vpcf", PATTACH_ABSORIGIN, hero)
-                    ParticleManager:SetParticleControl(effect, 0, target)
-                    ParticleManager:SetParticleControl(effect, 1, Vector(256, 1, 1))
-
-                    --ScreenShake(hero:GetPos(), 2, 100, 0.15, 1500, 0, true)
-                end,
-                modifier = { name = "modifier_shaker_e", ability = self },
-            })
+                KnockupTo(victim, hero, victim:GetPos() + direction * 500, 0.65, {
+                    gesture = ACT_DOTA_FLAIL,
+                    invulnerable = true,
+                    decrease = 10/2
+                })
             end
         })
 

@@ -319,7 +319,9 @@ end
 
 function SoftKnockback:Update()
     if self.hero:Alive() and not self.cantStart then
-        self.force = math.max(0, self.force - self.decrease)
+        if not self.hero:FindModifier("modifier_knockup") then
+            self.force = math.max(0, self.force - self.decrease)
+        end
 
         if self.knockup then
             self.knockup = self.knockup - 10
@@ -366,4 +368,141 @@ function Knockback(hero, ability, direction, distance, speed, heightFunction, mo
     if instanceof(hero, Hero) then
         hero:AddKnockbackSource(ability:GetCaster():GetParentEntity())
     end
+end
+
+Knockup = Knockup or class({}, nil, Dash)
+
+function Knockup:constructor(hero, source, direction, speed, knockup, params)
+    if instanceof(hero, Projectile) then
+        return
+    end
+
+    local multiplier = 1
+
+    for _, modifier in pairs(hero:AllModifiers()) do
+        if modifier.GetKnockbackMultiplier then
+            multiplier = multiplier * modifier:GetKnockbackMultiplier()
+        end
+    end
+
+    self.decrease = params.decrease or 10/3
+    self.speed = speed * math.sqrt(multiplier) / 30
+    self.knockup = knockup * math.sqrt(multiplier)
+    self.h = hero:GetPos().z
+    self.hero = hero
+    self.source = source or hero
+    self.direction = direction:Normalized() 
+    self.start = GameRules:GetGameTime()
+    if params.invulnerable then
+        self.IsInvulnerable = params.invulnerable or true
+    end
+
+    if params.modifier then
+        self.modifier = params.modifier.name
+        self.modifierHandle = self.hero:AddNewModifier(self.source, params.modifier.ability, params.modifier.name, { duration = self:GetRemainingDashTime() })
+    else
+        self.modifier = "modifier_knockup"
+        self.modifierHandle = self.hero:AddNewModifier(self.source, nil, "modifier_knockup", { duration = self:GetRemainingDashTime() })
+    end
+
+    if self.modifierHandle then
+        self.modifierHandle.IsInvulnerable = function()
+            if type(self.IsInvulnerable) == "function" then
+                return self.IsInvulnerable(self, hero)
+            elseif type(self.IsInvulnerable) == "boolean" then
+                return self.IsInvulnerable
+            end
+        end
+    end
+
+    if instanceof(hero, Hero) then
+        GameRules.GameMode.round.spells:InterruptDashes(self.hero)
+        hero:AddKnockbackSource(source)
+
+        if params.gesture then
+            hero:Animate(params.gesture, params.gestureRate)
+            self.gesture = params.gesture
+        end
+    end
+
+    hero.round.spells:AddDash(self)
+end
+
+function Knockup:GetRemainingDashTime()
+    local roundUp = function(num) return num + (1 - (num % 1)) end
+    local di = math.sqrt((self.knockup * self.knockup) - self.knockup * -self.decrease + 0.25 * (-self.decrease * -self.decrease) + 2 * -self.decrease * -self.h)
+
+    return ((roundUp((((-self.knockup + 0.5 * -self.decrease) - di) / -self.decrease))) * 0.033203125) - GameRules:GetGameTime() + self.start
+end
+
+function Knockup:Update()
+    if not self.hero:Alive() then
+        self:End(true)
+        return
+    end
+
+    local oldPos = self.hero:GetPos()
+    local newPos = self:PositionFunction(oldPos)
+    newPos.z = self:HeightFunction()
+
+    if newPos.z <= 0 and self.knockup <= 0 then
+        self:End(false, oldPos)
+        return
+    end
+
+    self.knockup = self.knockup - self.decrease
+    self.h = newPos.z
+
+    self.hero:SetPos(newPos)
+end
+
+function Knockup:PositionFunction(current)
+    return current + self.speed * self.direction
+end
+
+function Knockup:HeightFunction(current)
+    return self.h + self.knockup
+end
+
+function Knockup:Interrupt()
+    self:End(true)
+end
+
+function Knockup:End(Interrupted, pos)
+    self.destroyed = true
+
+    if self.modifierHandle then
+        self.modifierHandle:Destroy()
+    end
+
+    if self.gesture and instanceof(self.hero,Hero) and self.hero.round.spells.TestCircle(self.hero:GetPos(), self.hero:GetRad()) then
+        self.hero:GetUnit():FadeGesture(self.gesture)
+    end
+
+    if not Interrupted then
+        local k = - self.hero:GetPos().z / self.knockup
+        local newPos = (self.hero:GetPos() + self.speed * self.direction * k) * Vector(1,1,0)
+
+        self.hero:SetPos(newPos)
+
+        if self.hero:Alive() then
+            if self.hero.round.spells.TestCircle(self.hero:GetPos(), self.hero:GetRad()) then
+                SoftKnockback(self.hero, self.source, self.direction, self.speed, { decrease = self.decrease })
+            end
+
+            ResolveNPCPositions(self.hero:GetPos(), 100)
+
+            GameRules.GameMode.round.spells:ResolveFallingEntities()
+        end
+    end
+end
+
+function KnockupTo(hero, source, target, time, params)
+    local direction = (target - hero:GetPos()):Normalized()
+    local speed = (target - hero:GetPos()):Length2D() / time
+    local n = time / 0.033203125
+    local height = hero:GetPos().z
+    local knockup = (height / n * 2 + ((params.decrease or 10/3) * (n - 1)))/2
+
+    return Knockup(hero, source, direction, speed, knockup, params)
 end

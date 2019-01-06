@@ -319,9 +319,7 @@ end
 
 function SoftKnockback:Update()
     if self.hero:Alive() and not self.cantStart then
-        if not self.hero:FindModifier("modifier_knockup") then
-            self.force = math.max(0, self.force - self.decrease)
-        end
+        self.force = math.max(0, self.force - self.decrease)
 
         if self.knockup then
             self.knockup = self.knockup - 10

@@ -23,6 +23,7 @@
 		},
 		{
 			_class = "C_OP_MovementPlaceOnGround"
+			m_bDisableOperator = true
 			m_bIncludeWater = true
 			m_flMaxTraceLength = 500.0
 		},

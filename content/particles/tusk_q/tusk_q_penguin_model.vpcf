@@ -1,4 +1,4 @@
-<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf10:version{b5ef673d-0450-4fb0-a91b-bacae6864827} -->
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:vpcf16:version{261b3cba-02c7-424f-854b-c432c6f018d1} -->
 {
 	_class = "CParticleSystemDefinition"
 	m_bShouldHitboxesFallbackToRenderBounds = false
@@ -24,6 +24,7 @@
 			]
 			m_bAnimated = true
 			m_nLOD = 1
+			m_bForceLoopingAnimation = true
 		},
 	]
 	m_Operators = 
@@ -73,8 +74,8 @@
 		},
 		{
 			_class = "C_INIT_PositionOffset"
-			m_OffsetMin = [ 1.0, 0.0, 0.0 ]
-			m_OffsetMax = [ 1.0, 0.0, 0.0 ]
+			m_OffsetMin = [ 1.0, 0.0, -128.0 ]
+			m_OffsetMax = [ 1.0, 0.0, -128.0 ]
 			m_bLocalCoords = true
 		},
 	]
@@ -88,12 +89,6 @@
 	m_Children = 
 	[
 		{
-			m_ChildRef = resource:"particles/econ/items/tuskarr/tusk_ti5_immortal/tusk_ice_shards_projectile_stout_model_swirls.vpcf"
-		},
-		{
-			m_ChildRef = resource:"particles/econ/items/tuskarr/tusk_ti5_immortal/tusk_ice_shards_projectile_stout_model_trail2.vpcf"
-		},
-		{
 			m_ChildRef = resource:"particles/tusk_q/tusk_q_endcap_model.vpcf"
 			m_bEndCap = true
 			m_bDisableChild = true
@@ -101,6 +96,12 @@
 		{
 			m_ChildRef = resource:"particles/tusk_q/tusk_q_endcap.vpcf"
 			m_bEndCap = true
+		},
+		{
+			m_ChildRef = resource:"particles/tusk_q/tusk_q_swiril.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/tusk_q/tusk_q_trail.vpcf"
 		},
 	]
 	m_nBehaviorVersion = 4

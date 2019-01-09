@@ -12,7 +12,7 @@ function EntityTuskSigil:constructor(round, owner, position, ability)
 
     self:SetPos(Vector(self:GetPos().x,self:GetPos().y, 450))
     self.z = 450
-    self:AddNewModifier(self, ability, "modifier_tusk_w_aura", {})
+    self:AddNewModifier(self, ability, "modifier_tusk_w_aura", { duration = 4.5 })
 
     self.startTime = GameRules:GetGameTime()
     self.hero:SwapAbilities("tusk_w", "tusk_w_sub")
@@ -25,13 +25,6 @@ function EntityTuskSigil:Update()
     getbase(EntityTuskSigil).Update(self)
 
     self:SetPos(self:CalculateNextPosition())
-
-    if GameRules:GetGameTime() - (self.startTime or 0) > 4.5 then
-        self:StopSound("Arena.Tusk.LoopW")
-        self.hero:SwapAbilities("tusk_w_sub", "tusk_w")
-        self.hero:FindAbility("tusk_w"):StartCooldown(self.hero:FindAbility("tusk_w"):GetCooldown(1))
-        self:Destroy()
-    end
 end
 
 function EntityTuskSigil:CalculateNextPosition()

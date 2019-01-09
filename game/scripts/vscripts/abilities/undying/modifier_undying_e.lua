@@ -1,7 +1,6 @@
 modifier_undying_e = class({})
-self = modifier_undying_e
 
-function self:CheckState()
+function modifier_undying_e:CheckState()
     local state = {
         [MODIFIER_STATE_UNSELECTABLE] = true,
         [MODIFIER_STATE_ROOTED] = true,
@@ -11,16 +10,16 @@ function self:CheckState()
     return state
 end
 
-function self:GetEffectName()
-    return "particles/units/heroes/hero_undying/undying_tombstone.vpcf"
+function modifier_undying_e:GetEffectName()
+    return "particles/undying_e/undying_e_aura.vpcf"
 end
 
-function self:GetEffectAttachType()
+function modifier_undying_e:GetEffectAttachType()
     return PATTACH_ABSORIGIN_FOLLOW
 end
 
 if IsServer() then
-    function self:OnCreated()
+    function modifier_undying_e:OnCreated()
         local index = FX("particles/aoe_marker.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), {
             cp1 = Vector(550, 1, 1),
             cp2 = Vector(0, 255, 74),
@@ -29,7 +28,7 @@ if IsServer() then
 
         self:AddParticle(index, false, false, -1, false, false)
 
-        index = FX("particles/units/heroes/hero_undying/undying_fg_aura.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), {
+        index = FX("particles/undying_e/undying_e_aura.vpcf", PATTACH_ABSORIGIN_FOLLOW, self:GetParent(), {
             cp1 = Vector(550, 1, 1),
         })
 

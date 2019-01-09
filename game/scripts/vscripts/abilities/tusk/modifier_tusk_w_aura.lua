@@ -10,12 +10,30 @@ if IsServer() then
             cp3 = Vector(525,2,1)
         })
 
-        self.marker = FX("particles/aoe_marker.vpcf", PATTACH_ABSORIGIN_FOLLOW, parent, {
-            cp0 = { ent = parent }  ,
+        self.marker = FX("particles/aoe_marker.vpcf", PATTACH_WORLDORIGIN, parent, {
+            cp0 = Vector(parent:GetAbsOrigin().x, parent:GetAbsOrigin().y, 0),
             cp1 = Vector(500, 1, 1),
             cp2 = Vector(0, 225, 215),
-            cp3 = Vector(math.huge, 0, 0)
+            cp3 = Vector(self:GetDuration(), 0, 0)
         })
+
+        self:StartIntervalThink(0)
+    end
+
+    function modifier_tusk_w_aura:OnIntervalThink()
+        local parent = self:GetParent()
+
+        ParticleManager:SetParticleControl(self.marker, 0, Vector(parent:GetAbsOrigin().x, parent:GetAbsOrigin().y, 0))
+    end
+
+    function modifier_tusk_w_aura:OnDestroy()
+        local ent = self:GetParent():GetParentEntity()
+        ent:StopSound("Arena.Tusk.LoopW")
+        ent.hero:SwapAbilities("tusk_w_sub", "tusk_w")
+        ent.hero:FindAbility("tusk_w"):StartCooldown(ent.hero:FindAbility("tusk_w"):GetCooldown(1))
+        ent:Destroy()
+
+        DFX(self.marker)
     end
 end
 

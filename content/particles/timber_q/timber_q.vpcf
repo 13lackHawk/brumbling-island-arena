@@ -31,6 +31,7 @@
 		},
 		{
 			_class = "C_OP_MovementPlaceOnGround"
+			m_bDisableOperator = true
 			m_flOffset = 64.0
 			m_flMaxTraceLength = 1024.0
 			m_flTolerance = 96.0

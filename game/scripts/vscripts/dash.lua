@@ -484,10 +484,6 @@ function Knockup:End(Interrupted, pos)
         self.hero:SetPos(newPos)
 
         if self.hero:Alive() then
-            if self.hero.round.spells.TestCircle(self.hero:GetPos(), self.hero:GetRad()) then
-                SoftKnockback(self.hero, self.source, self.direction, self.speed, { decrease = self.decrease })
-            end
-
             ResolveNPCPositions(self.hero:GetPos(), 100)
 
             GameRules.GameMode.round.spells:ResolveFallingEntities()

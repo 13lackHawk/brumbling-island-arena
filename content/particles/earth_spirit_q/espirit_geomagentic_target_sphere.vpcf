@@ -111,13 +111,13 @@
 			m_ChildRef = resource:"particles/units/heroes/hero_earth_spirit/espirit_geomagentic_target_spherewarp.vpcf"
 		},
 		{
-			m_ChildRef = resource:"particles/units/heroes/hero_earth_spirit/espirit_geomagneticgrip_pushrocks.vpcf"
-		},
-		{
 			m_ChildRef = resource:"particles/units/heroes/hero_earth_spirit/espirit_geomagentic_target_magnets.vpcf"
 		},
 		{
 			m_ChildRef = resource:"particles/units/heroes/hero_earth_spirit/espirit_geomagneticgrip_orientedmagnetic.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/earth_spirit_q/espirit_geomagneticgrip_pushrocks.vpcf"
 		},
 	]
 	m_PreEmissionOperators = 
